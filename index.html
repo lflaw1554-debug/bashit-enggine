@@ -1,51 +1,113 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Elite Engine</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+  <title>BUSHET EKONOMI</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="style.css"/>
 </head>
+
 <body>
 
-<div class="container">
-  <h1>ELITE ENGINE</h1>
-
-  <!-- BING -->
-  <div class="card">
-    <h2>ENGINE BING</h2>
-
-    <label class="switch">
-      <input type="checkbox" id="engineToggle" checked>
-      <span class="slider"></span>
-    </label>
-
-    <input type="number" id="target" value="10">
-    <input type="number" id="minDelay" value="8">
-    <input type="number" id="maxDelay" value="11">
-
-    <p id="progress">0 / 0</p>
+  <!-- NOTIFICATION -->
+  <div id="eliteNotify">
+    <span class="nt-icon">[!]</span>
+    <span id="ntMsg" class="nt-msg"></span>
   </div>
 
-  <!-- NEWS -->
-  <div class="card">
-    <h2>ENGINE NEWS</h2>
+  <!-- SETTINGS -->
+  <div id="settingsDialog" class="modal-overlay">
+    <div class="dialog-box">
+      <div class="dialog-msg" id="stgTitle">
+        SYSTEM CONTROLS
+      </div>
 
-    <label class="switch">
-      <input type="checkbox" id="newsToggle" checked>
-      <span class="slider"></span>
-    </label>
-
-    <input type="number" id="newsTarget" value="20">
-    <input type="number" id="newsMinDelay" value="8">
-    <input type="number" id="newsMaxDelay" value="11">
-
-    <p id="newsProgress">0 / 0</p>
+      <button class="btn" onclick="closeDialog('settingsDialog')">
+        CLOSE
+      </button>
+    </div>
   </div>
 
-  <button onclick="start()">START</button>
-  <button onclick="stop()">STOP</button>
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card" id="loginCard">
+
+    <div class="login-title">
+      BUSHET <span>EKONOMI</span>
+    </div>
+
+    <div class="login-sub">
+      DIRECT ACCESS MODE
+    </div>
+
+    <button class="btn btn-exe" onclick="enterApp()">
+      ENTER SYSTEM
+    </button>
+
+  </div>
 </div>
 
-<script src="script.js"></script>
+  <!-- APP -->
+  <div class="app-frame" id="appFrame">
+
+    <div class="header">
+      <div>
+        <h1>BUSHET <span>EKONOMI</span></h1>
+        <div class="sub-h" id="modeName">
+          Midnight Protocol
+        </div>
+      </div>
+
+      <button class="settings-btn" onclick="openDialog('settingsDialog')">
+        ⚙
+      </button>
+    </div>
+
+    <div class="content">
+
+      <div class="card" id="secM">
+
+        <div class="card-head">
+          <span class="card-n">ENGINE MSN</span>
+        </div>
+
+        <div class="grid-layout">
+
+          <div class="grid-item grid-full">
+            <span class="label">Read Target</span>
+            <input type="number" id="tgtM" value="10"/>
+          </div>
+
+          <div class="grid-item">
+            <span class="label">Min Delay</span>
+            <input type="number" id="vMinM" value="8"/>
+          </div>
+
+          <div class="grid-item">
+            <span class="label">Max Delay</span>
+            <input type="number" id="vMaxM" value="11"/>
+          </div>
+
+        </div>
+
+        <div class="status-info" id="msgM">Ready</div>
+
+      </div>
+
+    </div>
+
+    <div class="dock">
+      <button class="btn btn-exe" id="btnStart" onclick="launch()">
+        EXECUTE OPERATIONS
+      </button>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
