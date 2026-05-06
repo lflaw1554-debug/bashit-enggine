@@ -1,12 +1,6 @@
 let running = false;
 
-const words = ["liga inggris","liga 1","mobil terbaru","cuaca","harga emas harta dinata","harga emas antam"];
-
-const newsUrls = [
-  "https://www.bing.com/news",
-  "https://www.bing.com/news/search?q=teknologi",
-  "https://www.bing.com/news/search?q=game"
-];
+const words = ["kucing","mobil","game","film","teknologi"];
 
 function randomQuery(){
   return words[Math.floor(Math.random()*words.length)] + " " + Math.floor(Math.random()*1000);
@@ -16,73 +10,59 @@ function randomDelay(min,max){
   return (Math.random()*(max-min)+min)*1000;
 }
 
+// ================= START =================
 function start(){
-  running = true;
-  startBing();
-  startNews();
-}
-
-function stop(){
-  running = false;
-}
-
-/* ================= BING ================= */
-function startBing(){
-  if(!engineToggle.checked) return;
-
-  let count = 0;
   const max = parseInt(target.value);
   const min = parseInt(minDelay.value);
   const maxD = parseInt(maxDelay.value);
 
-  function loop(){
-    if(!running || count >= max) return;
+  localStorage.setItem("running", "true");
+  localStorage.setItem("count", "0");
+  localStorage.setItem("max", max);
+  localStorage.setItem("min", min);
+  localStorage.setItem("maxD", maxD);
 
-    count++;
-    progress.innerText = count + " / " + max;
-
-    const delay = randomDelay(min,maxD);
-
-    // buka search
-    window.location.href = "https://www.bing.com/search?q=" + encodeURIComponent(randomQuery());
-
-    // balik ke halaman utama
-    setTimeout(() => {
-      window.location.href = window.location.origin;
-    }, delay);
-
-    // ulang
-    setTimeout(loop, delay + 2000);
-  }
-
-  loop();
+  runLoop();
 }
 
-/* ================= NEWS ================= */
-function startNews(){
-  if(!newsToggle.checked) return;
+// ================= LOOP =================
+function runLoop(){
+  if(localStorage.getItem("running") !== "true") return;
 
-  let count = 0;
-  const max = parseInt(newsTarget.value);
-  const min = parseInt(newsMinDelay.value);
-  const maxD = parseInt(newsMaxDelay.value);
+  let count = parseInt(localStorage.getItem("count"));
+  let max = parseInt(localStorage.getItem("max"));
+  let min = parseInt(localStorage.getItem("min"));
+  let maxD = parseInt(localStorage.getItem("maxD"));
 
-  function loop(){
-    if(!running || count >= max) return;
-
-    count++;
-    newsProgress.innerText = count + " / " + max;
-
-    const delay = randomDelay(min,maxD);
-
-    window.location.href = newsUrls[Math.floor(Math.random()*newsUrls.length)];
-
-    setTimeout(() => {
-      window.location.href = window.location.origin;
-    }, delay);
-
-    setTimeout(loop, delay + 2000);
+  if(count >= max){
+    localStorage.setItem("running", "false");
+    return;
   }
 
-  loop();
+  count++;
+  localStorage.setItem("count", count);
+
+  const delay = randomDelay(min,maxD);
+
+  // buka Bing
+  setTimeout(()=>{
+    window.location.href = "https://www.bing.com/search?q=" + encodeURIComponent(randomQuery());
+  }, 1000);
+
+  // balik ke halaman utama
+  setTimeout(()=>{
+    window.location.href = window.location.origin;
+  }, delay + 2000);
+}
+
+// ================= AUTO LANJUT =================
+window.onload = function(){
+  if(localStorage.getItem("running") === "true"){
+    setTimeout(runLoop, 2000);
+  }
+};
+
+// ================= STOP =================
+function stop(){
+  localStorage.setItem("running", "false");
 }
