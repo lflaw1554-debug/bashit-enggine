@@ -1,68 +1,160 @@
-let running = false;
+const tgt =
+    parseInt(
+      document.getElementById("tgtB").value
+    );
 
-const words = ["kucing","mobil","game","film","teknologi"];
+  const min =
+    parseInt(
+      document.getElementById("vMinB").value
+    );
 
-function randomQuery(){
-  return words[Math.floor(Math.random()*words.length)] + " " + Math.floor(Math.random()*1000);
-}
+  const max =
+    parseInt(
+      document.getElementById("vMaxB").value
+    );
 
-function randomDelay(min,max){
-  return (Math.random()*(max-min)+min)*1000;
-}
+  let count =
+    parseInt(
+      localStorage.getItem("countB")
+    );
 
-// ================= START =================
-function start(){
-  const max = parseInt(target.value);
-  const min = parseInt(minDelay.value);
-  const maxD = parseInt(maxDelay.value);
+  if(count >= tgt){
 
-  localStorage.setItem("running", "true");
-  localStorage.setItem("count", "0");
-  localStorage.setItem("max", max);
-  localStorage.setItem("min", min);
-  localStorage.setItem("maxD", maxD);
+    notify("ALL MISSIONS COMPLETED");
 
-  runLoop();
-}
+    document.getElementById("msgB").innerText =
+      "COMPLETED";
 
-// ================= LOOP =================
-function runLoop(){
-  if(localStorage.getItem("running") !== "true") return;
+    document.getElementById("finalNote").style.display =
+      "block";
 
-  let count = parseInt(localStorage.getItem("count"));
-  let max = parseInt(localStorage.getItem("max"));
-  let min = parseInt(localStorage.getItem("min"));
-  let maxD = parseInt(localStorage.getItem("maxD"));
+    localStorage.setItem("running","false");
 
-  if(count >= max){
-    localStorage.setItem("running", "false");
     return;
+
   }
 
   count++;
-  localStorage.setItem("count", count);
 
-  const delay = randomDelay(min,maxD);
+  localStorage.setItem("countB",count);
 
-  // buka Bing
-  setTimeout(()=>{
-    window.location.href = "https://www.bing.com/search?q=" + encodeURIComponent(randomQuery());
-  }, 1000);
+  cB = count;
 
-  // balik ke halaman utama
-  setTimeout(()=>{
-    window.location.href = window.location.origin;
-  }, delay + 2000);
+  document.getElementById("doneB").innerText =
+    String(count).padStart(2,"0");
+
+  document.getElementById("fillB").style.width =
+    (count/tgt*100) + "%";
+
+  const delay = randomDelay(min,max);
+
+  const query = randomQuery();
+
+  document.getElementById("msgB").innerText =
+    "SEARCHING...";
+
+  activeWin = window.open(
+    "https://www.bing.com/search?q=" +
+    encodeURIComponent(query),
+    "_blank"
+  );
+
+  currentTimer = setTimeout(()=>{
+
+    if(activeWin){
+
+      activeWin.close();
+
+    }
+
+    runBing();
+
+  },delay);
+
 }
 
-// ================= AUTO LANJUT =================
-window.onload = function(){
-  if(localStorage.getItem("running") === "true"){
-    setTimeout(runLoop, 2000);
+// ================= PAUSE =================
+
+function togglePause(){
+
+  isPaused = !isPaused;
+
+  const btn =
+    document.getElementById("btnPause");
+
+  if(isPaused){
+
+    clearTimeout(currentTimer);
+
+    clearTimeout(safetyTimer);
+
+    if(activeWin){
+
+      activeWin.close();
+
+    }
+
+    btn.innerText = "RESUME";
+
+    notify("PAUSED");
+
+  }else{
+
+    btn.innerText = "HOLD";
+
+    notify("RESUMED");
+
+    if(document.getElementById("onM").checked){
+
+      runMsn();
+
+    }else{
+
+      runBing();
+
+    }
+
   }
-};
 
-// ================= STOP =================
-function stop(){
-  localStorage.setItem("running", "false");
 }
+
+// ================= THEME =================
+
+function toggleTheme(){
+
+  document.body.classList.toggle("light-mode");
+
+  notify("THEME CHANGED");
+
+}
+
+// ================= SOUND =================
+
+function toggleSound(){
+
+  notify("SOUND TOGGLED");
+
+}
+
+// ================= LANGUAGE =================
+
+function toggleLang(){
+
+  notify("LANGUAGE CHANGED");
+
+}
+
+// ================= AUTO RESUME =================
+
+window.onload = function(){
+
+  if(
+    localStorage.getItem("running")
+    === "true"
+  ){
+
+    notify("RESTORING SESSION");
+
+  }
+
+};
