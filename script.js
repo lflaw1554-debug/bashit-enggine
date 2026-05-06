@@ -48,36 +48,24 @@ function startBing(){
   const maxD = parseInt(maxDelay.value);
 
   function loop(){
-    if(!running || count>=max) return;
+    if(!running || count >= max) return;
 
     count++;
-    progress.innerText = count+" / "+max;
+    progress.innerText = count + " / " + max;
 
-    window.open("https://www.bing.com/search?q="+encodeURIComponent(randomQuery()));
+    const delay = randomDelay(min, maxD);
 
-    setTimeout(loop, randomDelay(min,maxD));
+    // pindah ke Bing
+    window.location.href = "https://www.bing.com/search?q=" + encodeURIComponent(randomQuery());
+
+    // balik lagi ke halaman utama
+    setTimeout(() => {
+      window.location.href = window.location.origin;
+    }, delay);
+
+    // ulang lagi
+    setTimeout(loop, delay + 2000);
   }
-  loop();
-}
 
-// NEWS
-function startNews(){
-  if(!document.getElementById("newsToggle").checked) return;
-
-  let count = 0;
-  const max = parseInt(newsTarget.value);
-  const min = parseInt(newsMinDelay.value);
-  const maxD = parseInt(newsMaxDelay.value);
-
-  function loop(){
-    if(!running || count>=max) return;
-
-    count++;
-    newsProgress.innerText = count+" / "+max;
-
-    window.open(newsUrls[Math.floor(Math.random()*newsUrls.length)]);
-
-    setTimeout(loop, randomDelay(min,maxD));
-  }
   loop();
 }
