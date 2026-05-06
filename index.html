@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Bing Helper Elite</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>ELITE ENGINE</h1>
+  <p class="subtitle">CONTROL PANEL</p>
+
+  <!-- ENGINE BING -->
+  <div class="card">
+    <h2>ENGINE BING</h2>
+
+    <div class="toggle-row">
+      <span>Status</span>
+      <label class="switch">
+        <input type="checkbox" id="engineToggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <label>Keyword (opsional)</label>
+    <input type="text" id="customWords" placeholder="anime,crypto,bola">
+
+    <label>Target</label>
+    <input type="number" id="target" value="20">
+
+    <div class="row">
+      <div>
+        <label>Min Delay</label>
+        <input type="number" id="minDelay" value="2">
+      </div>
+      <div>
+        <label>Max Delay</label>
+        <input type="number" id="maxDelay" value="5">
+      </div>
+    </div>
+
+    <p id="status">READY</p>
+    <div class="progress" id="progress">0 / 0</div>
+  </div>
+
+  <!-- ENGINE NEWS -->
+  <div class="card">
+    <h2>ENGINE NEWS</h2>
+
+    <div class="toggle-row">
+      <span>Status</span>
+      <label class="switch">
+        <input type="checkbox" id="newsToggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <label>Target</label>
+    <input type="number" id="newsTarget" value="10">
+
+    <div class="row">
+      <div>
+        <label>Min Delay</label>
+        <input type="number" id="newsMinDelay" value="2">
+      </div>
+      <div>
+        <label>Max Delay</label>
+        <input type="number" id="newsMaxDelay" value="5">
+      </div>
+    </div>
+
+    <p id="newsStatus">READY</p>
+    <div class="progress" id="newsProgress">0 / 0</div>
+  </div>
+
+  <button class="execute" onclick="start()">EKSEKUSI OPERASI</button>
+  <button class="stop" onclick="stop()">STOP</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
