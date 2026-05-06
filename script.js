@@ -6,9 +6,9 @@ const defaultWords = [
 
 const newsUrls = [
   "https://www.bing.com/news",
-  "https://www.bing.com/news/search?q=teknologi",
-  "https://www.bing.com/news/search?q=gaming",
-  "https://www.bing.com/news/search?q=crypto"
+  "https://www.msn.com/id-id/berita/other/mbg-rp-55-triliun-jadi-kunci-jaga-pertumbuhan-ekonomi/ar-AA22tRpk",
+  "https://www.msn.com/en-gb/news/uknews/don-t-believe-polanski-promises-says-starmer-on-london-elections/ar-AA22uvOk?ocid=sapphireappshare",
+  "https://www.msn.com/en-gb/news/uknews/starmer-set-for-catastrophic-week-as-labour-vote-collapses/ar-AA22rRTJ?ocid=sapphireappshare"
 ];
 
 function getWords(){
