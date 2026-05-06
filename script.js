@@ -1,27 +1,15 @@
 let running = false;
 
-const defaultWords = [
-  "kucing","anjing","mobil","gunung","film","musik","bola"
-];
+const words = ["liga inggris","liga 1","mobil terbaru","cuaca","harga emas harta dinata","harga emas antam"];
 
 const newsUrls = [
   "https://www.bing.com/news",
-  "https://www.msn.com/id-id/berita/other/mbg-rp-55-triliun-jadi-kunci-jaga-pertumbuhan-ekonomi/ar-AA22tRpk",
-  "https://www.msn.com/en-gb/news/uknews/don-t-believe-polanski-promises-says-starmer-on-london-elections/ar-AA22uvOk?ocid=sapphireappshare",
-  "https://www.msn.com/en-gb/news/uknews/starmer-set-for-catastrophic-week-as-labour-vote-collapses/ar-AA22rRTJ?ocid=sapphireappshare"
+  "https://www.bing.com/news/search?q=teknologi",
+  "https://www.bing.com/news/search?q=game"
 ];
 
-function getWords(){
-  const input = document.getElementById("customWords").value;
-  if(input.trim() === "") return defaultWords;
-  return input.split(",");
-}
-
 function randomQuery(){
-  const words = getWords();
-  const extra = ["2025","viral","terbaru","review"];
-  return words[Math.floor(Math.random()*words.length)] + " " +
-         extra[Math.floor(Math.random()*extra.length)];
+  return words[Math.floor(Math.random()*words.length)] + " " + Math.floor(Math.random()*1000);
 }
 
 function randomDelay(min,max){
@@ -38,9 +26,9 @@ function stop(){
   running = false;
 }
 
-// BING
+/* ================= BING ================= */
 function startBing(){
-  if(!document.getElementById("engineToggle").checked) return;
+  if(!engineToggle.checked) return;
 
   let count = 0;
   const max = parseInt(target.value);
@@ -53,17 +41,46 @@ function startBing(){
     count++;
     progress.innerText = count + " / " + max;
 
-    const delay = randomDelay(min, maxD);
+    const delay = randomDelay(min,maxD);
 
-    // pindah ke Bing
+    // buka search
     window.location.href = "https://www.bing.com/search?q=" + encodeURIComponent(randomQuery());
 
-    // balik lagi ke halaman utama
+    // balik ke halaman utama
     setTimeout(() => {
       window.location.href = window.location.origin;
     }, delay);
 
-    // ulang lagi
+    // ulang
+    setTimeout(loop, delay + 2000);
+  }
+
+  loop();
+}
+
+/* ================= NEWS ================= */
+function startNews(){
+  if(!newsToggle.checked) return;
+
+  let count = 0;
+  const max = parseInt(newsTarget.value);
+  const min = parseInt(newsMinDelay.value);
+  const maxD = parseInt(newsMaxDelay.value);
+
+  function loop(){
+    if(!running || count >= max) return;
+
+    count++;
+    newsProgress.innerText = count + " / " + max;
+
+    const delay = randomDelay(min,maxD);
+
+    window.location.href = newsUrls[Math.floor(Math.random()*newsUrls.length)];
+
+    setTimeout(() => {
+      window.location.href = window.location.origin;
+    }, delay);
+
     setTimeout(loop, delay + 2000);
   }
 
