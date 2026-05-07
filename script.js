@@ -34,13 +34,12 @@ const msnLinks = [
   "https://www.msn.com/en-gb/news/world/sky-news-halted-for-ultimate-humiliation-breaking-news-alert-for-donald-trump/ar-AA22vBj6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
   ];
 const islamicQueries = [
-  "https://www.bing.com/search?pglt=2339&q=jokg&cvid=7da368f7858b411e964fc5eafc764e0f&gs_lcrp=EgRlZGdlKgYIABBFGDkyBggAEEUYOTIGCAEQABhAMgYIAhAuGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQgxNzQwajBqN6gCALACAA&FORM=ANNTA1&PC=ASTS",
-  "https://www.bing.com/search?q=liga1&qs=n&form=QBRE&sp=-1&ghc=1&lq=0&pq=liga1&sc=12-5&sk=&cvid=59C766EE579D4ED289989F08D38D26AD",
-  "https://www.bing.com/search?q=laliga&cvid=987f1079d0bf4c249fe969fdc08b384c&gs_lcrp=EgRlZGdlKgYIABBFGDkyBggAEEUYOTIGCAEQABhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQgzMDkwajBqOagCALACAA&FORM=ANAB01&PC=ASTS",
-  "https://www.bing.com/search?q=liga+inggris&cvid=edab4d22395348f282ca6fad2dfa27be&gs_lcrp=EgRlZGdlKgYIABBFGDkyBggAEEUYOTIGCAEQIxgnMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQgzOTEzajBqOagCALACAA&FORM=ANAB01&PC=ASTS",
-  "https://www.bing.com/search?q=cuaca+hari+ini&cvid=af262c68d22a493abb1ea088831580b8&gs_lcrp=EgRlZGdlKgYIABBFGDkyBggAEEUYOTIGCAEQABhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQgzNTYzajBqOagCALACAA&FORM=ANAB01&PC=ASTS",
-  "https://www.bing.com/search?q=jokes%20hari%20ini&qs=n&form=QBRE&sp=-1&lq=0&pq=jokeshari%20ini&sc=10-13&sk=&cvid=ADDC268017EF4413AAF75F208A699472"
-];
+  "islam itu indah",
+  "bagaimana cara bikin kue",
+  "resep rawon",
+  "rendang dari mana",
+  "mobil*",
+  ];
 
 async function runProPlayer() {
 
