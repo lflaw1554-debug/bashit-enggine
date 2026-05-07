@@ -15,31 +15,34 @@ function writeLog(msg, color = "#444") {
   log.scrollTop = log.scrollHeight;
 }
 
+// ======================
 // DATA
+// ======================
+
 const msnLinks = [
   "https://www.msn.com",
-  "https://www.msn.com/en-gb/travel/news/holidaymakers-told-to-arrive-four-hours-early-or-miss-flights-in-ees-chaos/ss-AA22lkS6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/news/uknews/starmer-under-threat-over-trojan-horse-plot-to-smuggle-rival-back-to-replace-him/ar-AA22wWGb?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/entertainment/tv/badenoch-starmer-s-finished-and-polanski-s-a-joke-we-re-the-only-serious-choice/ar-AA22xk97?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/entertainment/news/king-charles-allegedly-slams-top-dog-authority-prince-william-told-to-know-his-place/ar-AA22wXBc?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/travel/news/coventry-airport-to-close-after-90-years-with-all-flights-scrapped-within-weeks/ar-AA22wiSz?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/money/other/aldi-and-lidl-rule-could-be-forced-to-change-as-uk-supermarkets-demand-crackdown/ar-AA22wfrY?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/news/uknews/starmer-s-last-ditch-plea-as-labour-braces-for-local-election-disaster/ar-AA22yUxG?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/travel/news/uk-staycation-demand-rises-as-airlines-told-they-can-cancel-flights/ss-AA22qn5L?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/lifestyle/family-relationships/report-queen-camilla-s-ex-husband-now-right-hand-man-to-princess-anne/ss-AA22i4Ea?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/foodanddrink/other/binman-s-rule-to-anyone-recycling-tins-and-jars-with-labels-left-on/ar-AA1X2DRu?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/money/other/britain-sleepwalking-towards-jobless-generation-warn-retailers/ar-AA22AqRQ?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/news/uknews/keir-starmer-to-use-eu-reset-to-stave-off-leadership-challenge/ar-AA22zFsq?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/money/technology/all-gmail-users-urged-to-check-one-setting-now-as-important-warning-issued/ar-AA22ueZv?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/news/world/sky-news-halted-for-ultimate-humiliation-breaking-news-alert-for-donald-trump/ar-AA22vBj6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  ];
+  "https://www.msn.com/en-gb/travel/news/holidaymakers-told-to-arrive-four-hours-early-or-miss-flights-in-ees-chaos/ss-AA22lkS6",
+  "https://www.msn.com/en-gb/news/uknews/starmer-under-threat-over-trojan-horse-plot-to-smuggle-rival-back-to-replace-him/ar-AA22wWGb",
+  "https://www.msn.com/en-gb/entertainment/tv/badenoch-starmer-s-finished-and-polanski-s-a-joke-we-re-the-only-serious-choice/ar-AA22xk97",
+  "https://www.msn.com/en-gb/entertainment/news/king-charles-allegedly-slams-top-dog-authority-prince-william-told-to-know-his-place/ar-AA22wXBc",
+  "https://www.msn.com/en-gb/travel/news/coventry-airport-to-close-after-90-years-with-all-flights-scrapped-within-weeks/ar-AA22wiSz"
+];
+
 const islamicQueries = [
-  "islam itu indah,
-  "bagaimana cara bikin kue,
-  "resep rawon,
-  "rendang dari mana,
-  "mobil,
-  ];
+  "islam itu indah",
+  "bagaimana cara bikin kue",
+  "resep rawon",
+  "rendang dari mana",
+  "mobil",
+  "teknologi terbaru",
+  "cara membuat kopi",
+  "tips sehat",
+  "wisata indonesia"
+];
+
+// ======================
+// MAIN FUNCTION
+// ======================
 
 async function runProPlayer() {
 
@@ -55,13 +58,18 @@ async function runProPlayer() {
   const maxD =
     parseInt(document.getElementById("maxD")?.value || 10);
 
-  const btn = document.getElementById("btn-execute");
+  const btn =
+    document.getElementById("btn-execute");
 
   const msnStatus =
     document.getElementById("msn-status")?.value || "OFF";
 
   const bingStatus =
     document.getElementById("bing-status")?.value || "OFF";
+
+  // ======================
+  // BUTTON STOP
+  // ======================
 
   if (btn) {
 
@@ -79,6 +87,10 @@ async function runProPlayer() {
 
   }
 
+  // ======================
+  // COUNTER
+  // ======================
+
   const bingTotal =
     document.getElementById("bing-total");
 
@@ -88,24 +100,30 @@ async function runProPlayer() {
   if (bingTotal) bingTotal.innerText = bingTarget;
   if (msnTotal) msnTotal.innerText = msnTarget;
 
-  writeLog("MEMULAI OPERASI ELITE...", "#facc15");
+  writeLog("MEMULAI OPERASI...", "#facc15");
 
-  // MSN
+  // ======================
+  // MSN ENGINE
+  // ======================
+
   if (msnStatus === "ON" && msnTarget > 0) {
 
-    writeLog("MEMULAI ENGINE MSN NEWS...", "#eab308");
+    writeLog("MEMULAI MSN NEWS...", "#eab308");
 
     for (let i = 1; i <= msnTarget; i++) {
 
       let newsUrl =
-        msnLinks[Math.floor(Math.random() * msnLinks.length)];
+        msnLinks[
+          Math.floor(Math.random() * msnLinks.length)
+        ];
 
       writeLog(
-        `[${i}/${msnTarget}] MEMBUKA MSN...`,
+        `[${i}/${msnTarget}] MEMBUKA MSN`,
         "#eab308"
       );
 
-      const winMsn = window.open(newsUrl, "_blank");
+      const winMsn =
+        window.open(newsUrl, "_blank");
 
       if (!winMsn) {
 
@@ -134,18 +152,23 @@ async function runProPlayer() {
 
   }
 
-  // BING
+  // ======================
+  // BING ENGINE
+  // ======================
+
   if (bingStatus === "ON" && bingTarget > 0) {
 
-    writeLog("PINDAH KE ENGINE BING SEARCH...", "#fff");
+    writeLog("PINDAH KE BING SEARCH...", "#ffffff");
 
     for (let i = 1; i <= bingTarget; i++) {
 
-      let rawQ =
+      // QUERY RANDOM TANPA ANGKA
+      let q =
         islamicQueries[
           Math.floor(Math.random() * islamicQueries.length)
         ];
 
+      // DELAY RANDOM
       let delay =
         Math.floor(
           Math.random() * (maxD - minD + 1)
@@ -153,7 +176,7 @@ async function runProPlayer() {
 
       writeLog(
         `[${i}/${bingTarget}] SEARCH: "${q}"`,
-        "#fff"
+        "#ffffff"
       );
 
       const winBing = window.open(
@@ -169,14 +192,19 @@ async function runProPlayer() {
 
       }
 
+      // ======================
+      // PROGRESS BAR
+      // ======================
+
       let progress = 0;
 
-      const step = 100 / (delay * 2);
+      const step =
+        100 / (delay * 10);
 
       const bar =
         document.getElementById("progress-bar");
 
-      for (let d = 0; d < delay * 2; d++) {
+      for (let d = 0; d < delay * 10; d++) {
 
         progress += step;
 
@@ -210,12 +238,20 @@ async function runProPlayer() {
 
   }
 
+  // ======================
+  // DONE
+  // ======================
+
   writeLog("SEMUA TUGAS SELESAI!", "#22c55e");
 
   alert("OPERASI SELESAI!");
+
 }
 
-// BUTTON
+// ======================
+// BUTTON START
+// ======================
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const btn =
@@ -223,7 +259,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (btn) {
 
-    btn.addEventListener("click", runProPlayer);
+    btn.addEventListener(
+      "click",
+      runProPlayer
+    );
 
   }
 
