@@ -1,301 +1,61 @@
-function writeLog(msg, color = "#444") {
+const hasilDiv = document.getElementById('hasil');
+const loadingDiv = document.getElementById('loading');
+const keywordInput = document.getElementById('keyword');
 
-  const log = document.getElementById("log-box");
-
-  if (!log) return;
-
-  const time = new Date().toLocaleTimeString();
-
-  log.innerHTML += `
-    <div style="color:${color}">
-      [${time}] > ${msg}
-    </div>
-  `;
-
-  log.scrollTop = log.scrollHeight;
-}
-
-// ======================
-// DATA
-// ======================
-
-const msnLinks = [
-  "https://www.msn.com",
-  "https://www.msn.com/en-gb/travel/news/holidaymakers-told-to-arrive-four-hours-early-or-miss-flights-in-ees-chaos/ss-AA22lkS6",
-  "https://www.msn.com/en-gb/news/uknews/starmer-under-threat-over-trojan-horse-plot-to-smuggle-rival-back-to-replace-him/ar-AA22wWGb",
-  "https://www.msn.com/en-gb/entertainment/tv/badenoch-starmer-s-finished-and-polanski-s-a-joke-we-re-the-only-serious-choice/ar-AA22xk97",
-  "https://www.msn.com/en-gb/entertainment/news/king-charles-allegedly-slams-top-dog-authority-prince-william-told-to-know-his-place/ar-AA22wXBc",
-  "https://www.msn.com/en-gb/travel/news/coventry-airport-to-close-after-90-years-with-all-flights-scrapped-within-weeks/ar-AA22wiSz"
-];
-
-const islamicQueries = [
-  "islam itu indah",
-  "bagaimana cara bikin kue",
-  "resep rawon",
-  "rendang dari mana",
-  "mobil",
-  "teknologi terbaru",
-  "cara membuat kopi",
-  "tips sehat",
-  "wisata indonesia"
-];
-
-// ======================
-// MAIN FUNCTION
-// ======================
-
-async function runProPlayer() {
-
-  const bingTarget =
-    parseInt(document.getElementById("bing-target")?.value || 0);
-
-  const msnTarget =
-    parseInt(document.getElementById("msn-target")?.value || 0);
-
-  const minD =
-    parseInt(document.getElementById("minD")?.value || 5);
-
-  const maxD =
-    parseInt(document.getElementById("maxD")?.value || 10);
-
-  const btn =
-    document.getElementById("btn-execute");
-
-  const msnStatus =
-    document.getElementById("msn-status")?.value || "OFF";
-
-  const bingStatus =
-    document.getElementById("bing-status")?.value || "OFF";
-
-  // ======================
-  // BUTTON STOP
-  // ======================
-
-  if (btn) {
-
-    btn.innerText = "STOP / MUAT ULANG 😎";
-
-    btn.style.background = "#ef4444";
-
-    btn.onclick = function () {
-
-      if (confirm("Hentikan semua operasi?")) {
-        location.reload();
-      }
-
-    };
-
+async function cariBerita() {
+  const keyword = keywordInput.value.trim();
+  if (!keyword) {
+    alert('Isi kata kunci dulu ya');
+    return;
   }
+  
+  loadingDiv.style.display = 'block';
+  hasilDiv.innerHTML = '';
 
-  // ======================
-  // COUNTER
-  // ======================
+  try {
+    const res = await fetch(/api/berita?q=${encodeURIComponent(keyword)});
+    const data = await res.json();
 
-  const bingTotal =
-    document.getElementById("bing-total");
-
-  const msnTotal =
-    document.getElementById("msn-total");
-
-  if (bingTotal) bingTotal.innerText = bingTarget;
-  if (msnTotal) msnTotal.innerText = msnTarget;
-
-  writeLog("MEMULAI OPERASI...", "#facc15");
-
-  // ======================
-  // MSN ENGINE
-  // ======================
-
-  if (msnStatus === "ON" && msnTarget > 0) {
-
-    writeLog("MEMULAI MSN NEWS...", "#eab308");
-
-    for (let i = 1; i <= msnTarget; i++) {
-
-      let newsUrl =
-        msnLinks[
-          Math.floor(Math.random() * msnLinks.length)
-        ];
-
-      writeLog(
-        `[${i}/${msnTarget}] MEMBUKA MSN`,
-        "#eab308"
-      );
-
-      const winMsn =
-        window.open(newsUrl, "_blank");
-
-      if (!winMsn) {
-
-        writeLog("POP-UP DIBLOKIR!", "red");
-        break;
-
-      }
-
-      // tunggu baca
-      await new Promise(r => setTimeout(r, 6000));
-
-      // scroll dikit
-      try {
-
-        winMsn.scrollTo({
-          top: 500,
-          behavior: "smooth"
-        });
-
-      } catch (e) {}
-
-      await new Promise(r => setTimeout(r, 2000));
-
-      winMsn.close();
-
-      const msnDone =
-        document.getElementById("msn-done");
-
-      if (msnDone) {
-
-        msnDone.innerText =
-          i < 10 ? "0" + i : i;
-
-      }
-
-      await new Promise(r => setTimeout(r, 1500));
-
+    if (data.error) {
+      hasilDiv.innerHTML = <div class="error">Error: ${data.error}</div>;
+      return;
     }
 
-  }
-
-  // ======================
-  // BING ENGINE
-  // ======================
-
-  if (bingStatus === "ON" && bingTarget > 0) {
-
-    writeLog("PINDAH KE BING SEARCH...", "#ffffff");
-
-    for (let i = 1; i <= bingTarget; i++) {
-
-      // query random
-      let q =
-        islamicQueries[
-          Math.floor(Math.random() * islamicQueries.length)
-        ];
-
-      // delay random
-      let delay =
-        Math.floor(
-          Math.random() * (maxD - minD + 1)
-        ) + minD;
-
-      writeLog(
-        `[${i}/${bingTarget}] SEARCH: "${q}"`,
-        "#ffffff"
-      );
-
-      // buka bing
-      const winBing = window.open(
-        "https://www.bing.com/search?q=" +
-        encodeURIComponent(q),
-        "_self"
-      );
-
-      // popup gagal
-      if (!winBing) {
-
-        writeLog("POP-UP DIBLOKIR!", "red");
-        break;
-
-      }
-
-      // tunggu load
-      await new Promise(r => setTimeout(r, 3000));
-
-      // scroll simulasi baca
-      try {
-
-        winBing.scrollTo({
-          top: 400,
-          behavior: "smooth"
-        });
-
-      } catch (e) {}
-
-      // ======================
-      // PROGRESS BAR
-      // ======================
-
-      let progress = 0;
-
-      const step =
-        100 / (delay * 10);
-
-      const bar =
-        document.getElementById("progress-bar");
-
-      for (let d = 0; d < delay * 10; d++) {
-
-        progress += step;
-
-        if (bar) {
-          bar.style.width = progress + "%";
-        }
-
-        await new Promise(r => setTimeout(r, 100));
-
-      }
-
-      // reset bar
-      if (bar) {
-        bar.style.width = "0%";
-      }
-
-      // tutup tab
-      winBing.close();
-
-      // update counter
-      const bingDone =
-        document.getElementById("bing-done");
-
-      if (bingDone) {
-
-        bingDone.innerText =
-          i < 10 ? "0" + i : i;
-
-      }
-
-      // jeda antar search
-      await new Promise(r => setTimeout(r, 1000));
-
+    if (data.length === 0) {
+      hasilDiv.innerHTML = <div class="empty">Berita tentang "${keyword}" tidak ditemukan 😢</div>;
+      return;
     }
 
+    hasilDiv.innerHTML = <h2>Hasil untuk "${keyword}"</h2>;
+    
+    data.forEach(item => {
+      const tgl = new Date(item.tanggal).toLocaleDateString('id-ID', {
+        day: 'numeric', month: 'long', year: 'numeric'
+      });
+      
+      hasilDiv.innerHTML += 
+        <article class="card">
+          ${item.gambar ? <img src="${item.gambar}" alt="${item.judul}" class="thumb"> : ''}
+          <div class="content">
+            <h3><a href="${item.link}" target="_blank" rel="noopener">${item.judul}</a></h3>
+            <p class="meta">${item.sumber} • ${tgl}</p>
+            <p class="desc">${item.deskripsi}</p>
+          </div>
+        </article>
+      ;
+    });
+
+  } catch (err) {
+    hasilDiv.innerHTML = <div class="error">Gagal ambil data. Cek koneksi kamu.</div>;
+  } finally {
+    loadingDiv.style.display = 'none';
   }
-
-  // ======================
-  // DONE
-  // ======================
-
-  writeLog("SEMUA TUGAS SELESAI!", "#22c55e");
-
-  alert("OPERASI SELESAI!");
-
 }
 
-// ======================
-// BUTTON START
-// ======================
+// Auto cari pas web dibuka
+window.addEventListener('load', cariBerita);
 
-document.addEventListener("DOMContentLoaded", () => {
-
-  const btn =
-    document.getElementById("btn-execute");
-
-  if (btn) {
-
-    btn.addEventListener(
-      "click",
-      runProPlayer
-    );
-
-  }
-
+// Enter buat cari
+keywordInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') cariBerita();
 });
