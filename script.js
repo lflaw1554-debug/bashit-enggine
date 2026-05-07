@@ -132,7 +132,20 @@ async function runProPlayer() {
 
       }
 
+      // tunggu baca
       await new Promise(r => setTimeout(r, 6000));
+
+      // scroll dikit
+      try {
+
+        winMsn.scrollTo({
+          top: 500,
+          behavior: "smooth"
+        });
+
+      } catch (e) {}
+
+      await new Promise(r => setTimeout(r, 2000));
 
       winMsn.close();
 
@@ -162,13 +175,13 @@ async function runProPlayer() {
 
     for (let i = 1; i <= bingTarget; i++) {
 
-      // QUERY RANDOM TANPA ANGKA
+      // query random
       let q =
         islamicQueries[
           Math.floor(Math.random() * islamicQueries.length)
         ];
 
-      // DELAY RANDOM
+      // delay random
       let delay =
         Math.floor(
           Math.random() * (maxD - minD + 1)
@@ -179,33 +192,33 @@ async function runProPlayer() {
         "#ffffff"
       );
 
+      // buka bing
       const winBing = window.open(
-  "https://www.bing.com/search?q=" +
-  encodeURIComponent(q),
-  "_blank"
-);
+        "https://www.bing.com/search?q=" +
+        encodeURIComponent(q),
+        "_blank"
+      );
 
-if (winBing) {
-
-  // tunggu halaman kebuka
-  await new Promise(r => setTimeout(r, 3000));
-
-  try {
-
-    // scroll dikit buat simulasi baca
-    winBing.scrollTo({
-      top: 500,
-      behavior: "smooth"
-    });
-
-  } catch (e) {}
-
-}
+      // popup gagal
+      if (!winBing) {
 
         writeLog("POP-UP DIBLOKIR!", "red");
         break;
 
       }
+
+      // tunggu load
+      await new Promise(r => setTimeout(r, 3000));
+
+      // scroll simulasi baca
+      try {
+
+        winBing.scrollTo({
+          top: 400,
+          behavior: "smooth"
+        });
+
+      } catch (e) {}
 
       // ======================
       // PROGRESS BAR
@@ -231,8 +244,15 @@ if (winBing) {
 
       }
 
+      // reset bar
+      if (bar) {
+        bar.style.width = "0%";
+      }
+
+      // tutup tab
       winBing.close();
 
+      // update counter
       const bingDone =
         document.getElementById("bing-done");
 
@@ -243,10 +263,7 @@ if (winBing) {
 
       }
 
-      if (bar) {
-        bar.style.width = "0%";
-      }
-
+      // jeda antar search
       await new Promise(r => setTimeout(r, 1000));
 
     }
