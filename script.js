@@ -160,3 +160,13 @@ async function runProPlayer() {
   }, 1000);
 
 }
+document.addEventListener("DOMContentLoaded", () => {
+
+    console.log("JS jalan");
+
+    document.querySelector("button")
+      .addEventListener("click", () => {
+          alert("TOMBOL JALAN");
+      });
+
+});
