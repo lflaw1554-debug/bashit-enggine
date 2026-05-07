@@ -1,19 +1,33 @@
-const hasilDiv = document.getElementById('hasil');
-const loadingDiv = document.getElementById('loading');
-const keywordInput = document.getElementById('keyword');
+let modeAktif = 'berita'; // default tab berita
 
-async function cariBerita() {
-  const keyword = keywordInput.value.trim();
+function gantiTab(mode) {
+  modeAktif = mode;
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  const placeholder = mode === 'berita' ? 'Cari berita MSN...' : 'Cari di web...';
+  document.getElementById('keyword').placeholder = placeholder;
+  document.getElementById('hasil').innerHTML = '';
+}
+
+async function cari() {
+  const keyword = document.getElementById('keyword').value.trim();
   if (!keyword) {
-    alert('Isi kata kunci dulu ya');
+    alert('Isi kata kunci dulu');
     return;
   }
+  
+  const hasilDiv = document.getElementById('hasil');
+  const loadingDiv = document.getElementById('loading');
   
   loadingDiv.style.display = 'block';
   hasilDiv.innerHTML = '';
 
+  // Panggil API sesuai tab yg aktif
+  const endpoint = modeAktif === 'berita' ? '/api/berita' : '/api/web';
+
   try {
-    const res = await fetch(/api/berita?q=${encodeURIComponent(keyword)});
+    const res = await fetch(${endpoint}?q=${encodeURIComponent(keyword)});
     const data = await res.json();
 
     if (data.error) {
@@ -22,23 +36,23 @@ async function cariBerita() {
     }
 
     if (data.length === 0) {
-      hasilDiv.innerHTML = <div class="empty">Berita tentang "${keyword}" tidak ditemukan 😢</div>;
+      hasilDiv.innerHTML = <div class="empty">Hasil untuk "${keyword}" tidak ditemukan</div>;
       return;
     }
 
-    hasilDiv.innerHTML = <h2>Hasil untuk "${keyword}"</h2>;
+    hasilDiv.innerHTML = <h2>Hasil ${modeAktif === 'berita' ? 'Berita MSN' : 'Web'} untuk "${keyword}"</h2>;
     
     data.forEach(item => {
-      const tgl = new Date(item.tanggal).toLocaleDateString('id-ID', {
+      const tgl = item.tanggal ? new Date(item.tanggal).toLocaleDateString('id-ID', {
         day: 'numeric', month: 'long', year: 'numeric'
-      });
+      }) : '';
       
       hasilDiv.innerHTML += 
         <article class="card">
           ${item.gambar ? <img src="${item.gambar}" alt="${item.judul}" class="thumb"> : ''}
           <div class="content">
             <h3><a href="${item.link}" target="_blank" rel="noopener">${item.judul}</a></h3>
-            <p class="meta">${item.sumber} • ${tgl}</p>
+            <p class="meta">${item.sumber} ${tgl ? '• ' + tgl : ''}</p>
             <p class="desc">${item.deskripsi}</p>
           </div>
         </article>
@@ -46,16 +60,13 @@ async function cariBerita() {
     });
 
   } catch (err) {
-    hasilDiv.innerHTML = <div class="error">Gagal ambil data. Cek koneksi kamu.</div>;
+    hasilDiv.innerHTML = <div class="error">Gagal ambil data. Coba lagi.</div>;
   } finally {
     loadingDiv.style.display = 'none';
   }
 }
 
-// Auto cari pas web dibuka
-window.addEventListener('load', cariBerita);
-
-// Enter buat cari
-keywordInput.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') cariBerita();
+window.addEventListener('load', cari);
+document.getElementById('keyword').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') cari();
 });
