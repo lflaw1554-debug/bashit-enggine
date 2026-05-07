@@ -196,7 +196,7 @@ async function runProPlayer() {
       const winBing = window.open(
         "https://www.bing.com/search?q=" +
         encodeURIComponent(q),
-        "_blank"
+        "_self"
       );
 
       // popup gagal
