@@ -1,72 +1,94 @@
-let modeAktif = 'berita'; // default tab berita
-
-function gantiTab(mode) {
-  modeAktif = mode;
-  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
+async function mulaiOperasi() {
+  const btn = document.querySelector('.eksekusi');
+  btn.disabled = true;
+  btn.textContent = 'MEMPROSES...';
   
-  const placeholder = mode === 'berita' ? 'Cari berita MSN...' : 'Cari di web...';
-  document.getElementById('keyword').placeholder = placeholder;
   document.getElementById('hasil').innerHTML = '';
+
+  // Jalankan MSN kalau toggle ON
+  if (document.getElementById('toggle-msn').checked) {
+    await prosesMSN();
+  }
+
+  // Jalankan Bing kalau toggle ON
+  if (document.getElementById('toggle-bing').checked) {
+    await prosesBing();
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'EKSEKUSI OPERASI';
 }
 
-async function cari() {
-  const keyword = document.getElementById('keyword').value.trim();
-  if (!keyword) {
-    alert('Isi kata kunci dulu');
-    return;
+async function prosesMSN() {
+  const query = document.getElementById('query-msn').value;
+  const situs = document.getElementById('situs-msn').value;
+  const statusEl = document.querySelectorAll('.status');
+  
+  statusEl.textContent = 'MENCARI BERITA...';
+
+  let siteQuery = 'site:msn.com';
+  if (situs.trim()) {
+    const situsArr = situs.split(',').map(s => site:${s.trim()}).join(' OR ');
+    siteQuery = (site:msn.com OR ${situsArr});
   }
-  
-  const hasilDiv = document.getElementById('hasil');
-  const loadingDiv = document.getElementById('loading');
-  
-  loadingDiv.style.display = 'block';
-  hasilDiv.innerHTML = '';
 
-  // Panggil API sesuai tab yg aktif
-  const endpoint = modeAktif === 'berita' ? '/api/berita' : '/api/web';
-
+  const finalQuery = ${query} ${siteQuery};
+  
   try {
-    const res = await fetch(${endpoint}?q=${encodeURIComponent(keyword)});
+    const res = await fetch(/api/berita?q=${encodeURIComponent(finalQuery)});
     const data = await res.json();
-
-    if (data.error) {
-      hasilDiv.innerHTML = <div class="error">Error: ${data.error}</div>;
-      return;
-    }
-
-    if (data.length === 0) {
-      hasilDiv.innerHTML = <div class="empty">Hasil untuk "${keyword}" tidak ditemukan</div>;
-      return;
-    }
-
-    hasilDiv.innerHTML = <h2>Hasil ${modeAktif === 'berita' ? 'Berita MSN' : 'Web'} untuk "${keyword}"</h2>;
     
-    data.forEach(item => {
-      const tgl = item.tanggal ? new Date(item.tanggal).toLocaleDateString('id-ID', {
-        day: 'numeric', month: 'long', year: 'numeric'
-      }) : '';
-      
-      hasilDiv.innerHTML += 
-        <article class="card">
-          ${item.gambar ? <img src="${item.gambar}" alt="${item.judul}" class="thumb"> : ''}
-          <div class="content">
-            <h3><a href="${item.link}" target="_blank" rel="noopener">${item.judul}</a></h3>
-            <p class="meta">${item.sumber} ${tgl ? '• ' + tgl : ''}</p>
-            <p class="desc">${item.deskripsi}</p>
-          </div>
-        </article>
-      ;
-    });
-
-  } catch (err) {
-    hasilDiv.innerHTML = <div class="error">Gagal ambil data. Coba lagi.</div>;
-  } finally {
-    loadingDiv.style.display = 'none';
+    document.getElementById('count-msn').textContent = String(data.length).padStart(2, '0');
+    document.getElementById('total-msn').textContent = data.length;
+    document.getElementById('prog-msn').style.width = '100%';
+    
+    tampilkanHasil(data, 'MSN');
+    statusEl.textContent = 'SELESAI';
+  } catch (e) {
+    statusEl.textContent = 'ERROR';
   }
 }
 
-window.addEventListener('load', cari);
-document.getElementById('keyword').addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') cari();
-});
+async function prosesBing() {
+  const query = document.getElementById('query-bing').value;
+  const situs = document.getElementById('situs-bing').value;
+  const statusEl = document.getElementById('status-bing');
+  
+  statusEl.textContent = 'MENCARI WEB...';
+
+  let finalQuery = query;
+  if (situs.trim()) {
+    const situsArr = situs.split(',').map(s => site:${s.trim()}).join(' OR ');
+    finalQuery = ${query} (${situsArr});
+  }
+  
+  try {
+    const res = await fetch(/api/web?q=${encodeURIComponent(finalQuery)});
+    const data = await res.json();
+    
+    document.getElementById('count-bing').textContent = String(data.length).padStart(2, '0');
+    document.getElementById('total-bing').textContent = data.length;
+    document.getElementById('prog-bing').style.width = '100%';
+    
+    tampilkanHasil(data, 'BING');
+    statusEl.textContent = 'SELESAI';
+  } catch (e) {
+    statusEl.textContent = 'ERROR';
+  }
+}
+
+function tampilkanHasil(data, tipe) {
+  const hasilDiv = document.getElementById('hasil');
+  hasilDiv.innerHTML += <h3 style="color:#ffc700;margin:20px 0 10px 0;">HASIL ${tipe}</h3>;
+  
+  data.forEach(item => {
+    const tgl = item.tanggal ? new Date(item.tanggal).toLocaleDateString('id-ID') : '';
+    hasilDiv.innerHTML += 
+      <div class="card">
+        <h3><a href="${item.link}" target="_blank">${item.judul}</a></h3>
+        <p class="meta">${item.sumber} ${tgl ? '• ' + tgl : ''}</p>
+        <p class="desc">${item.deskripsi}</p>
+      </div>
+    ;
+  });
+}
