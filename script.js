@@ -28,7 +28,7 @@ const tgt =
     document.getElementById("finalNote").style.display =
       "block";
 
-    localStorage.setItem("running","false");
+    localStorage.setItem("running", "false");
 
     return;
 
@@ -36,17 +36,17 @@ const tgt =
 
   count++;
 
-  localStorage.setItem("countB",count);
+  localStorage.setItem("countB", count);
 
   cB = count;
 
   document.getElementById("doneB").innerText =
-    String(count).padStart(2,"0");
+    String(count).padStart(2, "0");
 
   document.getElementById("fillB").style.width =
-    (count/tgt*100) + "%";
+    (count / tgt * 100) + "%";
 
-  const delay = randomDelay(min,max);
+  const delay = randomDelay(min, max);
 
   const query = randomQuery();
 
@@ -69,7 +69,7 @@ const tgt =
 
     runBing();
 
-  },delay);
+  }, delay);
 
 }
 
@@ -85,7 +85,6 @@ function togglePause(){
   if(isPaused){
 
     clearTimeout(currentTimer);
-
     clearTimeout(safetyTimer);
 
     if(activeWin){
@@ -147,6 +146,26 @@ function toggleLang(){
 // ================= AUTO RESUME =================
 
 window.onload = function(){
+
+  // langsung tampil app utama
+  const appFrame =
+    document.getElementById("appFrame");
+
+  if(appFrame){
+
+    appFrame.style.display = "flex";
+
+  }
+
+  // sembunyikan login screen kalau masih ada
+  const loginScreen =
+    document.getElementById("loginScreen");
+
+  if(loginScreen){
+
+    loginScreen.style.display = "none";
+
+  }
 
   if(
     localStorage.getItem("running")
