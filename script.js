@@ -1,5 +1,3 @@
-console.log("SCRIPT MASUK");
-
 function writeLog(msg, color = "#444") {
 
   const log = document.getElementById("log-box");
@@ -17,181 +15,202 @@ function writeLog(msg, color = "#444") {
   log.scrollTop = log.scrollHeight;
 }
 
-// ================= DATA =================
-
-const islamicQueries = [
-  "doa harian islami",
-  "asmaul husna lengkap",
-  "jadwal sholat bogor",
-  "keutamaan tahajud",
-  "kisah nabi muhammad",
-  "cara zakat mal",
-  "kata kata Hari ini",
-  "cuaca hari ini",
-  "harga emas",
-  "rupiah saat ini",
-  "perak hari ini",
-  "pertandingan liga 1 hari ini"
-];
-
-const msnLinks = [
-  "https://www.msn.com",
-
-  "https://www.msn.com/en-gb/news/uknews/liberal-democrats-demand-investigation-into-zack-polanski-s-professional-background/ar-AA22xHIm?ocid=sapphireappshare",
-
-  "https://www.msn.com/en-gb/money/other/iconic-uk-bank-with-five-million-customers-to-be-wiped-from-high-streets-after-two-centuries/ar-AA22w2pu?ocid=sapphireappshare",
-
-  "https://www.msn.com/en-gb/lifestyle/lifestylegeneral/i-m-a-vet-and-these-10-dog-breeds-are-the-only-ones-i-d-ever-own/ss-AA1WqtlP?ocid=sapphireappshare",
-
-  "https://www.msn.com/en-gb/news/uknews/graham-linehan-praised-as-he-overcomes-sadiq-khan-social-media-shut-out-with-glorious-takedown/ar-AA22vPuu?ocid=sapphireappshare",
-
-  "https://www.msn.com/en-gb/news/world/trump-pays-tribute-after-ted-turner-death-with-shot-at-cnn/ar-AA22wDEo?ocid=sapphireappshare"
-];
-
-// ================= MAIN =================
+// DATA
+let 1 =
+    islamicQueries[
+      Math.floor(Math,random() *
+islamicQueries.lenght)
+  let newsUrl =
+  msnLinks[
+    Math.floor(Math.random() * msnLinks.length)
+  ];
 
 async function runProPlayer() {
 
-  writeLog("MEMULAI OPERASI...", "#22c55e");
-
   const bingTarget =
-    parseInt(document.getElementById("bing-target").value);
+    parseInt(document.getElementById("bing-target")?.value || 0);
 
   const msnTarget =
-    parseInt(document.getElementById("msn-target").value);
+    parseInt(document.getElementById("msn-target")?.value || 0);
 
   const minD =
-    parseInt(document.getElementById("minD").value);
+    parseInt(document.getElementById("minD")?.value || 5);
 
   const maxD =
-    parseInt(document.getElementById("maxD").value);
+    parseInt(document.getElementById("maxD")?.value || 10);
+
+  const btn = document.getElementById("btn-execute");
 
   const msnStatus =
-    document.getElementById("msn-status").value;
+    document.getElementById("msn-status")?.value || "OFF";
 
   const bingStatus =
-    document.getElementById("bing-status").value;
+    document.getElementById("bing-status")?.value || "OFF";
+
+  if (btn) {
+
+    btn.innerText = "STOP / MUAT ULANG 😎";
+
+    btn.style.background = "#ef4444";
+
+    btn.onclick = function () {
+
+      if (confirm("Hentikan semua operasi?")) {
+        location.reload();
+      }
+
+    };
+
+  }
+
+  const bingTotal =
+    document.getElementById("bing-total");
+
+  const msnTotal =
+    document.getElementById("msn-total");
+
+  if (bingTotal) bingTotal.innerText = bingTarget;
+  if (msnTotal) msnTotal.innerText = msnTarget;
+
+  writeLog("MEMULAI OPERASI ELITE...", "#facc15");
 
   // MSN
-  if (msnStatus === "ON") {
+  if (msnStatus === "ON" && msnTarget > 0) {
+
+    writeLog("MEMULAI ENGINE MSN NEWS...", "#eab308");
 
     for (let i = 1; i <= msnTarget; i++) {
 
-      const url =
-        msnLinks[
-          Math.floor(Math.random() * msnLinks.length)
-        ];
+      let newsUrl =
+        msnLinks[Math.floor(Math.random() * msnLinks.length)];
 
       writeLog(
-        `[${i}/${msnTarget}] MEMBUKA MSN`,
+        `[${i}/${msnTarget}] MEMBUKA MSN...`,
         "#eab308"
       );
 
-      const win =
-        window.open(url, "_blank");
+      const winMsn = window.open(newsUrl, "_blank");
 
-      await new Promise(r =>
-        setTimeout(r, 4000)
-      );
+      if (!winMsn) {
 
-      if (win) {
-        win.close();
+        writeLog("POP-UP DIBLOKIR!", "red");
+        break;
+
       }
 
-      document.getElementById("msn-done").innerText =
-        i.toString().padStart(2, "0");
+      await new Promise(r => setTimeout(r, 6000));
+
+      winMsn.close();
+
+      const msnDone =
+        document.getElementById("msn-done");
+
+      if (msnDone) {
+
+        msnDone.innerText =
+          i < 10 ? "0" + i : i;
+
+      }
+
+      await new Promise(r => setTimeout(r, 1500));
 
     }
 
   }
 
   // BING
-  if (bingStatus === "ON") {
+  if (bingStatus === "ON" && bingTarget > 0) {
+
+    writeLog("PINDAH KE ENGINE BING SEARCH...", "#fff");
 
     for (let i = 1; i <= bingTarget; i++) {
 
-      const q =
+      let rawQ =
         islamicQueries[
           Math.floor(Math.random() * islamicQueries.length)
         ];
 
-      const delay =
+      let q =
+        rawQ + " " + Math.floor(Math.random() * 999);
+
+      let delay =
         Math.floor(
           Math.random() * (maxD - minD + 1)
         ) + minD;
 
       writeLog(
-        `[${i}/${bingTarget}] SEARCH ${q}`,
-        "#60a5fa"
+        `[${i}/${bingTarget}] SEARCH: "${q}"`,
+        "#fff"
       );
 
-      const win =
-        window.open(
-          "https://bing.com/search?q=" +
-          encodeURIComponent(q),
-          "_blank"
-        );
+      const winBing = window.open(
+        "https://www.bing.com/search?q=" +
+        encodeURIComponent(q),
+        "_blank"
+      );
+
+      if (!winBing) {
+
+        writeLog("POP-UP DIBLOKIR!", "red");
+        break;
+
+      }
 
       let progress = 0;
+
+      const step = 100 / (delay * 2);
 
       const bar =
         document.getElementById("progress-bar");
 
-      const interval = setInterval(() => {
+      for (let d = 0; d < delay * 2; d++) {
 
-        progress += 100 / delay;
+        progress += step;
 
         if (bar) {
           bar.style.width = progress + "%";
         }
 
-      }, 1000);
+        await new Promise(r => setTimeout(r, 100));
 
-      await new Promise(r =>
-        setTimeout(r, delay * 1000)
-      );
+      }
 
-      clearInterval(interval);
+      winBing.close();
 
-      if (win) {
-        win.close();
+      const bingDone =
+        document.getElementById("bing-done");
+
+      if (bingDone) {
+
+        bingDone.innerText =
+          i < 10 ? "0" + i : i;
+
       }
 
       if (bar) {
         bar.style.width = "0%";
       }
 
-      document.getElementById("bing-done").innerText =
-        i.toString().padStart(2, "0");
+      await new Promise(r => setTimeout(r, 1000));
 
     }
 
   }
 
-  writeLog("SELESAI!", "#22c55e");
+  writeLog("SEMUA TUGAS SELESAI!", "#22c55e");
 
-  alert("OPERASI SELESAI");
-
+  alert("OPERASI SELESAI!");
 }
 
-// ================= BUTTON =================
-
+// BUTTON
 document.addEventListener("DOMContentLoaded", () => {
-
-  console.log("DOM READY");
 
   const btn =
     document.getElementById("btn-execute");
 
   if (btn) {
 
-    console.log("BUTTON KETEMU");
-
-    btn.onclick = runProPlayer;
-
-  } else {
-
-    console.log("BUTTON TIDAK ADA");
+    btn.addEventListener("click", runProPlayer);
 
   }
 
