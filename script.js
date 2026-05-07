@@ -34,11 +34,11 @@ const msnLinks = [
   "https://www.msn.com/en-gb/news/world/sky-news-halted-for-ultimate-humiliation-breaking-news-alert-for-donald-trump/ar-AA22vBj6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
   ];
 const islamicQueries = [
-  "islam itu indah",
-  "bagaimana cara bikin kue",
-  "resep rawon",
-  "rendang dari mana",
-  "mobil*",
+  "islam itu indah,
+  "bagaimana cara bikin kue,
+  "resep rawon,
+  "rendang dari mana,
+  "mobil,
   ];
 
 async function runProPlayer() {
