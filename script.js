@@ -124,19 +124,8 @@ async function runProPlayer() {
     writeLog("PINDAH KE ENGINE BING SEARCH...", "#fff");
 
     for (let i = 1; i <= bingTarget; i++) {
-
-      let rawQ =
-        islamicQueries[
-          Math.floor(Math.random() * islamicQueries.length)
-        ];
-
-      let q =
-        rawQ + " " + Math.floor(Math.random() * 999);
-
-      let delay =
-        Math.floor(
-          Math.random() * (maxD - minD + 1)
-        ) + minD;
+console.log(islamicQueries);
+console.log(msnLinks);
 
       writeLog(
         `[${i}/${bingTarget}] SEARCH: "${q}"`,
