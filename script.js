@@ -16,14 +16,20 @@ function writeLog(msg, color = "#444") {
 }
 
 // DATA
-let 1 =
-    islamicQueries[
-      Math.floor(Math,random() *
-islamicQueries.lenght)
-  let newsUrl =
-  msnLinks[
-    Math.floor(Math.random() * msnLinks.length)
-  ];
+const msnLinks = [
+  "https://www.msn.com",
+  "https://www.msn.com/en-gb/news",
+  "https://www.msn.com/en-gb/money"
+];
+
+const islamicQueries = [
+  "islam",
+  "quran",
+  "masjid",
+  "shalat",
+  "ramadhan",
+  "kajian islam"
+];
 
 async function runProPlayer() {
 
