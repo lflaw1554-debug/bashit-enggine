@@ -1,113 +1,37 @@
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
-  <title>BUSHET EKONOMI</title>
+<div class="toggle-row">
+        <span>Theme</span>
 
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
-
-  <link rel="stylesheet" href="style.css"/>
-</head>
-
-<body>
-
-  <!-- NOTIFICATION -->
-  <div id="eliteNotify">
-    <span class="nt-icon">[!]</span>
-    <span id="ntMsg" class="nt-msg"></span>
-  </div>
-
-  <!-- SETTINGS -->
-  <div id="settingsDialog" class="modal-overlay">
-    <div class="dialog-box">
-      <div class="dialog-msg" id="stgTitle">
-        SYSTEM CONTROLS
+        <button onclick="toggleTheme()">
+          Toggle
+        </button>
       </div>
 
-      <button class="btn" onclick="closeDialog('settingsDialog')">
-        CLOSE
-      </button>
-    </div>
-  </div>
+      <div class="toggle-row">
+        <span>Sound</span>
 
-<!-- LOGIN -->
-<div id="loginScreen">
-  <div class="login-card" id="loginCard">
-
-    <div class="login-title">
-      BUSHET <span>EKONOMI</span>
-    </div>
-
-    <div class="login-sub">
-      DIRECT ACCESS MODE
-    </div>
-
-    <button class="btn btn-exe" onclick="enterApp()">
-      ENTER SYSTEM
-    </button>
-
-  </div>
-</div>
-
-  <!-- APP -->
-  <div class="app-frame" id="appFrame">
-
-    <div class="header">
-      <div>
-        <h1>BUSHET <span>EKONOMI</span></h1>
-        <div class="sub-h" id="modeName">
-          Midnight Protocol
-        </div>
+        <button onclick="toggleSound()">
+          Toggle
+        </button>
       </div>
 
-      <button class="settings-btn" onclick="openDialog('settingsDialog')">
-        ⚙
-      </button>
-    </div>
+      <div class="toggle-row">
+        <span>Language</span>
 
-    <div class="content">
-
-      <div class="card" id="secM">
-
-        <div class="card-head">
-          <span class="card-n">ENGINE MSN</span>
-        </div>
-
-        <div class="grid-layout">
-
-          <div class="grid-item grid-full">
-            <span class="label">Read Target</span>
-            <input type="number" id="tgtM" value="10"/>
-          </div>
-
-          <div class="grid-item">
-            <span class="label">Min Delay</span>
-            <input type="number" id="vMinM" value="8"/>
-          </div>
-
-          <div class="grid-item">
-            <span class="label">Max Delay</span>
-            <input type="number" id="vMaxM" value="11"/>
-          </div>
-
-        </div>
-
-        <div class="status-info" id="msgM">Ready</div>
-
+        <button onclick="toggleLang()">
+          Switch
+        </button>
       </div>
 
     </div>
 
-    <div class="dock">
-      <button class="btn btn-exe" id="btnStart" onclick="launch()">
-        EXECUTE OPERATIONS
-      </button>
-    </div>
+    <!-- ================= FINAL NOTE ================= -->
 
-  </div>
+    <div
+      id="finalNote"
+      class="card"
+      style="display:none;"
+    >
+      <h2>MISSION COMPLETE</h2>
 
-  <script src="script.js"></script>
-</body>
-</html>
+      <p>
+        All search operations finished successfully.
