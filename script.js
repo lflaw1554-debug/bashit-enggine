@@ -1,179 +1,162 @@
-const tgt =
-    parseInt(
-      document.getElementById("tgtB").value
-    );
+function writeLog(msg, color = "#444") {
 
-  const min =
-    parseInt(
-      document.getElementById("vMinB").value
-    );
+  const log = document.getElementById("log-box");
+  const time = new Date().toLocaleTimeString();
 
-  const max =
-    parseInt(
-      document.getElementById("vMaxB").value
-    );
+  log.innerHTML += 
+    <div style="color:${color}">
+      [${time}] > ${msg}
+    </div>
+  ;
 
-  let count =
-    parseInt(
-      localStorage.getItem("countB")
-    );
-
-  if(count >= tgt){
-
-    notify("ALL MISSIONS COMPLETED");
-
-    document.getElementById("msgB").innerText =
-      "COMPLETED";
-
-    document.getElementById("finalNote").style.display =
-      "block";
-
-    localStorage.setItem("running", "false");
-
-    return;
-
-  }
-
-  count++;
-
-  localStorage.setItem("countB", count);
-
-  cB = count;
-
-  document.getElementById("doneB").innerText =
-    String(count).padStart(2, "0");
-
-  document.getElementById("fillB").style.width =
-    (count / tgt * 100) + "%";
-
-  const delay = randomDelay(min, max);
-
-  const query = randomQuery();
-
-  document.getElementById("msgB").innerText =
-    "SEARCHING...";
-
-  activeWin = window.open(
-    "https://www.bing.com/search?q=" +
-    encodeURIComponent(query),
-    "_blank"
-  );
-
-  currentTimer = setTimeout(()=>{
-
-    if(activeWin){
-
-      activeWin.close();
-
-    }
-
-    runBing();
-
-  }, delay);
-
+  log.scrollTop = log.scrollHeight;
 }
 
-// ================= PAUSE =================
+async function runProPlayer() {
 
-function togglePause(){
+  const bingTarget = parseInt(document.getElementById("bing-target").value);
+  const msnTarget = parseInt(document.getElementById("msn-target").value);
 
-  isPaused = !isPaused;
+  const minD = parseInt(document.getElementById("minD").value);
+  const maxD = parseInt(document.getElementById("maxD").value);
 
-  const btn =
-    document.getElementById("btnPause");
+  const btn = document.getElementById("btn-execute");
 
-  if(isPaused){
+  const msnStatus = document.getElementById("msn-status").value;
+  const bingStatus = document.getElementById("bing-status").value;
 
-    clearTimeout(currentTimer);
-    clearTimeout(safetyTimer);
+  btn.disabled = false;
 
-    if(activeWin){
+  btn.innerText = "STOP / MUAT ULANG 😎";
 
-      activeWin.close();
+  btn.style.background = "#ef4444";
 
+  btn.onclick = function () {
+
+    if (confirm("Hentikan semua operasi?")) {
+      location.reload();
     }
 
-    btn.innerText = "RESUME";
+  };
 
-    notify("PAUSED");
+  document.getElementById("bing-total").innerText = bingTarget;
+  document.getElementById("msn-total").innerText = msnTarget;
 
-  }else{
+  writeLog("MEMULAI OPERASI ELITE...", "#facc15");
 
-    btn.innerText = "HOLD";
+  // MSN
+  if (msnStatus === "ON" && msnTarget > 0) {
 
-    notify("RESUMED");
+    writeLog("MEMULAI ENGINE MSN NEWS...", "#eab308");
 
-    if(document.getElementById("onM").checked){
+    for (let i = 1; i <= msnTarget; i++) {
 
-      runMsn();
+      let newsUrl = msnLinks[Math.floor(Math.random() * msnLinks.length)];
 
-    }else{
+      writeLog([${i}/${msnTarget}] MEMBUKA MSN..., "#eab308");
 
-      runBing();
+      const winMsn = window.open(newsUrl, "_blank");
+
+      if (!winMsn) {
+
+        writeLog("POP-UP DIBLOKIR!", "red");
+        break;
+
+      }
+
+      await new Promise(r => setTimeout(r, 6000));
+
+      winMsn.close();
+
+      document.getElementById("msn-done").innerText =
+        i < 10 ? "0" + i : i;
+
+      await new Promise(r => setTimeout(r, 1500));
 
     }
 
   }
 
-}
+  // BING
+  if (bingStatus === "ON" && bingTarget > 0) {
 
-// ================= THEME =================
+    writeLog("PINDAH KE ENGINE BING SEARCH...", "#fff");
 
-function toggleTheme(){
+    for (let i = 1; i <= bingTarget; i++) {
 
-  document.body.classList.toggle("light-mode");
+      let rawQ =
+        islamicQueries[
+          Math.floor(Math.random() * islamicQueries.length)
+        ];
 
-  notify("THEME CHANGED");
+      let q = rawQ + " " + Math.floor(Math.random() * 999);
 
-}
+      let delay =
+        Math.floor(Math.random() * (maxD - minD + 1)) + minD;
 
-// ================= SOUND =================
+      writeLog([${i}/${bingTarget}] SEARCH: "${q}", "#fff");
 
-function toggleSound(){
+      const winBing = window.open(
+        "https://www.bing.com/search?q=" +
+          encodeURIComponent(q),
+        "_blank"
+      );
 
-  notify("SOUND TOGGLED");
+      if (!winBing) {
 
-}
+        writeLog("POP-UP DIBLOKIR!", "red");
+        break;
 
-// ================= LANGUAGE =================
+      }
 
-function toggleLang(){
+      let progress = 0;
 
-  notify("LANGUAGE CHANGED");
+      const step = 100 / (delay * 2);
 
-}
+      const bar = document.getElementById("progress-bar");
 
-// ================= AUTO RESUME =================
+      for (let d = 0; d < delay * 2; d++) {
 
-window.onload = function(){
+        progress += step;
 
-  // langsung tampil app utama
-  const appFrame =
-    document.getElementById("appFrame");
+        bar.style.width = progress + "%";
 
-  if(appFrame){
+        await new Promise(r => setTimeout(r, 100));
 
-    appFrame.style.display = "flex";
+      }
+
+      winBing.close();
+
+      document.getElementById("bing-done").innerText =
+        i < 10 ? "0" + i : i;
+
+      bar.style.width = "0%";
+
+      await new Promise(r => setTimeout(r, 1000));
+
+    }
 
   }
 
-  // sembunyikan login screen kalau masih ada
-  const loginScreen =
-    document.getElementById("loginScreen");
+  writeLog("SEMUA TUGAS SELESAI!", "#22c55e");
 
-  if(loginScreen){
+  const actx =
+    new (window.AudioContext || window.webkitAudioContext)();
 
-    loginScreen.style.display = "none";
+  const osc = actx.createOscillator();
 
-  }
+  osc.connect(actx.destination);
 
-  if(
-    localStorage.getItem("running")
-    === "true"
-  ){
+  osc.start();
 
-    notify("RESTORING SESSION");
+  setTimeout(() => {
 
-  }
+    osc.stop();
 
-};
+    alert("OPERASI SELESAI, ADZIIM!");
+
+    location.reload();
+
+  }, 1000);
+
+}
