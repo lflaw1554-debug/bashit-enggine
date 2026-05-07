@@ -1,181 +1,361 @@
-:root {
-  --bg: #0a0a0a;
-  --card: #141414;
-  --border: #2a2a2a;
-  --text: #e0e0e0;
-  --text-dim: #888;
-  --accent: #ffc700;
-  --accent-glow: rgba(255, 199, 0, 0.2);
-}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUSHET EKONOMI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --bg: #0A0612;
+      --card: #13111C;
+      --card-border: #2A2438;
+      --pink: #FF2E9F;
+      --pink-light: #FF5EB1;
+      --pink-glow: rgba(255, 46, 159, 0.3);
+      --text: #F5EFFF;
+      --text-dim: #A094B7;
+      --green: #00FFB7;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: var(--bg);
+      background-image: 
+        radial-gradient(at 20% 30%, rgba(255, 46, 159, 0.1) 0px, transparent 50%),
+        radial-gradient(at 80% 70%, rgba(255, 94, 177, 0.08) 0px, transparent 50%);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      padding: 20px 12px 40px;
+    }
+    
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 0 4px;
+    }
+    
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--pink-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .subtitle {
+      font-family: 'Poppins', sans-serif;
+      font-size: 10px;
+      color: var(--pink);
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+      padding: 0 4px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    
+    .header-line {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--pink), transparent);
+      margin-bottom: 24px;
+      box-shadow: 0 0 10px var(--pink-glow);
+    }
+    
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      color: var(--text);
+    }
+    
+    .toggle {
+      width: 48px;
+      height: 26px;
+      background: #1F1B2E;
+      border-radius: 13px;
+      position: relative;
+      cursor: pointer;
+      transition: 0.3s;
+      border: 1px solid var(--card-border);
+    }
+    
+    .toggle.active {
+      background: linear-gradient(135deg, var(--pink) 0%, var(--pink-light) 100%);
+      box-shadow: 0 0 15px var(--pink-glow);
+    }
+    
+    .toggle::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: 0.3s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .toggle.active::after {
+      left: 25px;
+    }
+    
+    .input-group {
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 14px;
+      background: rgba(255, 255, 255, 0.02);
+      transition: 0.3s;
+    }
+    
+    .input-group:focus-within {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 3px var(--pink-glow);
+    }
+    
+    .input-label {
+      font-family: 'Poppins', sans-serif;
+      font-size: 10px;
+      color: var(--pink);
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    
+    .input-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+      background: transparent;
+      border: none;
+      width: 100%;
+      outline: none;
+    }
+    
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    
+    .status {
+      font-family: 'Poppins', sans-serif;
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+      margin: 14px 0;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    
+    .status.ready {
+      color: var(--green);
+      text-shadow: 0 0 10px rgba(0, 255, 183, 0.4);
+    }
+    
+    .counter {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 52px;
+      margin: 18px 0 10px;
+      letter-spacing: -1px;
+    }
+    
+    .counter span {
+      color: var(--text-dim);
+      font-size: 36px;
+      font-weight: 400;
+    }
+    
+    .btn-execute {
+      width: 100%;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--pink-light) 100%);
+      color: #fff;
+      border: none;
+      padding: 20px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 2.5px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.3s;
+      text-transform: uppercase;
+      box-shadow: 0 4px 20px var(--pink-glow);
+    }
+    
+    .btn-execute:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px var(--pink-glow);
+    }
+    
+    .btn-execute:active {
+      transform: scale(0.98);
+    }
+    
+    .btn-execute:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .icon-btn {
+      background: none;
+      border: none;
+      color: var(--pink);
+      font-size: 22px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    
+    .icon-btn:hover {
+      color: var(--pink-light);
+      transform: rotate(90deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">Bushet Ekonomi</div>
+      <button class="icon-btn"><i class="fa-solid fa-sliders"></i></button>
+    </div>
+    <div class="subtitle">Midnight Protocol</div>
+    <div class="header-line"></div>
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+    <!-- ENGINE MSN -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Engine MSN</div>
+        <div class="toggle" id="toggleMsn"></div>
+      </div>
+      
+      <div class="input-group">
+        <div class="input-label">Target Baca</div>
+        <input type="number" class="input-value" id="targetMsn" value="10" min="1" max="100">
+      </div>
+      
+      <div class="input-row">
+        <div class="input-group">
+          <div class="input-label">Min Delay</div>
+          <input type="number" class="input-value" id="minDelayMsn" value="8" min="1">
+        </div>
+        <div class="input-group">
+          <div class="input-label">Max Delay</div>
+          <input type="number" class="input-value" id="maxDelayMsn" value="12" min="1">
+        </div>
+      </div>
+      
+      <div class="status ready" id="statusMsn">Ready</div>
+      <div class="counter"><span id="currentMsn">00</span> / <span id="totalMsn">10</span></div>
+    </div>
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Roboto Mono', monospace;
-  padding: 20px 10px;
-}
+    <!-- ENGINE BING -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Engine Bing</div>
+        <div class="toggle" id="toggleBing"></div>
+      </div>
+      
+      <div class="input-group">
+        <div class="input-label">Target Cari</div>
+        <input type="number" class="input-value" id="targetBing" value="20" min="1" max="100">
+      </div>
+      
+      <div class="input-row">
+        <div class="input-group">
+          <div class="input-label">Min Delay</div>
+          <input type="number" class="input-value" id="minDelayBing" value="8" min="1">
+        </div>
+        <div class="input-group">
+          <div class="input-label">Max Delay</div>
+          <input type="number" class="input-value" id="maxDelayBing" value="12" min="1">
+        </div>
+      </div>
+      
+      <div class="status" id="statusBing">Standby</div>
+      <div class="counter"><span id="currentBing">00</span> / <span id="totalBing">20</span></div>
+    </div>
 
-.container {
-  max-width: 480px;
-  margin: 0 auto;
-}
+    <button class="btn-execute" id="executeBtn">Eksekusi Operasi</button>
+  </div>
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 5px;
-}
-
-.header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 24px;
-  letter-spacing: 3px;
-  font-weight: 700;
-}
-
-.subtitle {
-  font-size: 12px;
-  color: var(--accent);
-  letter-spacing: 2px;
-}
-
-.settings-icon { font-size: 24px; opacity: 0.5; }
-
-.divider {
-  height: 2px;
-  background: var(--accent);
-  margin: 15px 0 25px 0;
-  box-shadow: 0 0 10px var(--accent-glow);
-}
-
-.engine {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.engine-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.engine-header h2 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 16px;
-  letter-spacing: 1px;
-}
-
-.input-group { margin-bottom: 18px; }
-
-.input-group label {
-  display: block;
-  font-size: 11px;
-  color: var(--accent);
-  margin-bottom: 8px;
-  letter-spacing: 1px;
-}
-
-.input-group input {
-  width: 100%;
-  background: #000;
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 12px;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 18px;
-  border-radius: 4px;
-}
-
-.input-group input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 8px var(--accent-glow);
-}
-
-.input-group small {
-  display: block;
-  font-size: 10px;
-  color: var(--text-dim);
-  margin-top: 5px;
-}
-
-.status {
-  font-size: 11px;
-  color: var(--text-dim);
-  margin-bottom: 10px;
-}
-
-.counter {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 48px;
-  text-align: center;
-  margin: 10px 0;
-}
-.counter span:first-child { color: var(--text); }
-.counter span:last-child { color: var(--text-dim); font-size: 24px; }
-
-.progress-bar {
-  width: 100%;
-  height: 4px;
-  background: #000;
-  border-radius: 2px;
-  overflow: hidden;
-}
-.progress {
-  width: 0%;
-  height: 100%;
-  background: var(--accent);
-  transition: width 0.3s;
-}
-
-.eksekusi {
-  width: 100%;
-  padding: 18px;
-  background: var(--accent);
-  color: #000;
-  border: none;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-  box-shadow: 0 0 15px var(--accent-glow);
-}
-.eksekusi:hover { filter: brightness(1.1); }
-.eksekusi:disabled { opacity: 0.4; cursor: not-allowed; }
-
-/* Switch Toggle */
-.switch { position: relative; display: inline-block; width: 44px; height: 24px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider {
-  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #333; transition: .4s; border-radius: 24px;
-}
-.slider:before {
-  position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
-  background-color: white; transition: .4s; border-radius: 50%;
-}
-input:checked + .slider { background-color: var(--accent); }
-input:checked + .slider:before { transform: translateX(20px); }
-
-#hasil { margin-top: 30px; }
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  padding: 15px;
-  margin-bottom: 12px;
-  border-radius: 4px;
-}
-.card h3 { font-size: 16px; margin-bottom: 8px; }
-.card h3 a { color: var(--accent); text-decoration: none; }
-.card .meta { font-size: 11px; color: var(--text-dim); margin-bottom: 8px; }
-.card .desc { font-size: 13px; line-height: 1.5; }
+  <script>
+    let msnActive = false;
+    let bingActive = false;
+    
+    document.getElementById('toggleMsn').onclick = function() {
+      msnActive = !msnActive;
+      this.classList.toggle('active', msnActive);
+      document.getElementById('statusMsn').innerText = msnActive ? 'Running' : 'Ready';
+      document.getElementById('statusMsn').classList.toggle('ready', !msnActive);
+    }
+    
+    document.getElementById('toggleBing').onclick = function() {
+      bingActive = !bingActive;
+      this.classList.toggle('active', bingActive);
+      document.getElementById('statusBing').innerText = bingActive ? 'Running' : 'Standby';
+    }
+    
+    document.getElementById('targetMsn').oninput = (e) => {
+      document.getElementById('totalMsn').innerText = e.target.value.padStart(2, '0');
+    }
+    document.getElementById('targetBing').oninput = (e) => {
+      document.getElementById('totalBing').innerText = e.target.value.padStart(2, '0');
+    }
+    
+    document.getElementById('executeBtn').onclick = () => {
+      if (!msnActive && !bingActive) {
+        alert('Aktifkan minimal 1 engine dulu!');
+        return;
+      }
+      console.log('Eksekusi dimulai');
+      console.log('MSN:', msnActive, 'Target:', document.getElementById('targetMsn').value);
+      console.log('BING:', bingActive, 'Target:', document.getElementById('targetBing').value);
+      alert('Operasi dimulai! Isi logika bot kamu di bagian ini.');
+    }
+  </script>
+</body>
+</html>
