@@ -180,12 +180,27 @@ async function runProPlayer() {
       );
 
       const winBing = window.open(
-        "https://www.bing.com/search?q=" +
-        encodeURIComponent(q),
-        "_blank"
-      );
+  "https://www.bing.com/search?q=" +
+  encodeURIComponent(q),
+  "_blank"
+);
 
-      if (!winBing) {
+if (winBing) {
+
+  // tunggu halaman kebuka
+  await new Promise(r => setTimeout(r, 3000));
+
+  try {
+
+    // scroll dikit buat simulasi baca
+    winBing.scrollTo({
+      top: 500,
+      behavior: "smooth"
+    });
+
+  } catch (e) {}
+
+}
 
         writeLog("POP-UP DIBLOKIR!", "red");
         break;
