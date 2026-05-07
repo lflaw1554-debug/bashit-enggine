@@ -3,37 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bing Search + MSN News</title>
+  <title>ALKUMAYI ELITE - Midnight Protocol</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>🔍 Bing Search</h1>
-      <p>Cari Berita MSN & Web pake Bing API</p>
+    <header class="header">
+      <div>
+        <h1>ALKUMAYI ELITE</h1>
+        <p class="subtitle">MIDNIGHT PROTOCOL</p>
+      </div>
+      <div class="settings-icon">⚙️</div>
     </header>
-    
-    <div class="rewards-box">
-      <h3>Microsoft Rewards</h3>
-      <p>Pantau poin kamu manual biar aman</p>
-      <a href="https://rewards.bing.com" target="_blank" class="btn-rewards">Buka Dashboard Rewards</a>
+    <div class="divider"></div>
+
+    <!-- ENGINE MSN -->
+    <div class="engine">
+      <div class="engine-header">
+        <h2>ENGINE MSN</h2>
+        <label class="switch">
+          <input type="checkbox" id="toggle-msn" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      
+      <div class="input-group">
+        <label>TARGET BERITA MSN</label>
+        <input type="text" id="query-msn" value="indonesia" placeholder="Topik berita: politik, teknologi...">
+      </div>
+      
+      <div class="input-group">
+        <label>SITUS BERITA TAMBAHAN</label>
+        <input type="text" id="situs-msn" value="kompas.com, detik.com, tempo.co" placeholder="pisahkan dengan koma">
+        <small>Misal: cnnindonesia.com, liputan6.com</small>
+      </div>
+      
+      <div class="status">READY</div>
+      <div class="counter"><span id="count-msn">00</span> / <span id="total-msn">10</span></div>
+      <div class="progress-bar"><div class="progress" id="prog-msn"></div></div>
     </div>
 
-    <div class="tabs">
-      <button class="tab-btn active" onclick="gantiTab('berita')">📰 Berita MSN</button>
-      <button class="tab-btn" onclick="gantiTab('web')">🌐 Pencarian Web</button>
+    <!-- ENGINE BING -->
+    <div class="engine">
+      <div class="engine-header">
+        <h2>ENGINE BING</h2>
+        <label class="switch">
+          <input type="checkbox" id="toggle-bing" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="input-group">
+        <label>TARGET CARI WEB</label>
+        <input type="text" id="query-bing" value="microsoft" placeholder="Kata kunci pencarian web...">
+      </div>
+
+      <div class="input-group">
+        <label>FILTER DOMAIN TERTENTU</label>
+        <input type="text" id="situs-bing" placeholder="Opsional: github.com, stackoverflow.com">
+        <small>Kosongkan untuk cari di semua web</small>
+      </div>
+
+      <div class="status" id="status-bing">STANDBY</div>
+      <div class="counter"><span id="count-bing">00</span> / <span id="total-bing">20</span></div>
+      <div class="progress-bar"><div class="progress" id="prog-bing"></div></div>
     </div>
 
-    <div class="search-box">
-      <input type="text" id="keyword" placeholder="Ketik kata kunci..." value="indonesia">
-      <button onclick="cari()">Cari</button>
-    </div>
-    
-    <div id="loading" style="display:none;">
-      <div class="spinner"></div>
-      <p>Sedang mencari...</p>
-    </div>
-    
+    <button class="eksekusi" onclick="mulaiOperasi()">EKSEKUSI OPERASI</button>
+
     <div id="hasil"></div>
   </div>
   <script src="script.js"></script>
