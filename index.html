@@ -3,83 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BUSHET EKONOMI</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BUSHET EKONOMI</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+  <title>Search Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+    body { font-family: 'Poppins', sans-serif; }
+  </style>
 </head>
-  
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <div class="title">BUSHET EKONOMI</div>
-      <button class="icon-btn"><i class="fa-solid fa-gear"></i></button>
-    </div>
-    <div class="subtitle">MIDNIGHT PROTOCOL</div>
-    <div class="header-line"></div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">ENGINE MSN</div>
-        <div class="toggle" id="toggleMsn"></div>
-      </div>
-      <div class="input-group">
-        <div class="input-label">TARGET BACA</div>
-        <input type="number" class="input-value" id="targetMsn" value="10" min="1">
-      </div>
-      <div class="input-row">
-        <div class="input-group">
-          <div class="input-label">MIN DELAY</div>
-          <input type="number" class="input-value" id="minDelayMsn" value="8" min="1">
+<body class="bg-gradient-to-br from-pink-50 to-sky-50 min-h-screen p-4">
+  <div class="max-w-md mx-auto space-y-4">
+    
+    <!-- CARD 1: ENGINE MSN NEWS -->
+    <div class="bg-gradient-to-r from-pink-400 to-sky-400 p-0.5 rounded-3xl shadow-lg">
+      <div class="bg-white rounded-3xl p-6">
+        <div class="flex justify-between items-center mb-4">
+          <p class="text-sky-600 font-semibold text-sm">ENGINE MSN NEWS</p>
+          <span class="bg-sky-400 text-white text-xs font-bold px-3 py-1 rounded-full">ON</span>
         </div>
-        <div class="input-group">
-          <div class="input-label">MAX DELAY</div>
-          <input type="number" class="input-value" id="maxDelayMsn" value="12" min="1">
-        </div>
+        
+        <p class="text-pink-500 text-xs mb-1">TARGET KLIK</p>
+        <input id="targetKlik" type="number" value="11" 
+               class="w-full border-2 border-sky-200 focus:border-pink-400 rounded-xl p-3 text-center text-2xl font-bold text-gray-700 outline-none">
+        
+        <p class="text-center mt-4 text-4xl font-bold text-pink-500">
+          <span id="currentKlik">00</span><span class="text-sky-400">/11</span>
+        </p>
       </div>
-      <div class="status ready" id="statusMsn">READY</div>
-      <div class="counter"><span id="currentMsn">00</span> / <span id="totalMsn">10</span></div>
     </div>
 
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">ENGINE BING</div>
-        <div class="toggle" id="toggleBing"></div>
-      </div>
-      <div class="input-group">
-        <div class="input-label">TARGET CARI</div>
-        <input type="number" class="input-value" id="targetBing" value="20" min="1">
-      </div>
-      <div class="input-row">
-        <div class="input-group">
-          <div class="input-label">MIN DELAY</div>
-          <input type="number" class="input-value" id="minDelayBing" value="8" min="1">
+    <!-- TOMBOL START -->
+    <button id="btnStart" class="w-full bg-sky-500 hover:bg-pink-500 text-white font-bold py-4 rounded-2xl shadow-lg transition duration-300">
+      START PENCARIAN
+    </button>
+
+    <!-- CARD 2: ENGINE BING SEARCH -->
+    <div class="bg-gradient-to-r from-pink-400 to-sky-400 p-0.5 rounded-3xl shadow-lg">
+      <div class="bg-white rounded-3xl p-6">
+        <div class="flex justify-between items-center mb-4">
+          <p class="text-sky-600 font-semibold text-sm">ENGINE BING SEARCH</p>
+          <span class="bg-sky-400 text-white text-xs font-bold px-3 py-1 rounded-full">ON</span>
         </div>
-        <div class="input-group">
-          <div class="input-label">MAX DELAY</div>
-          <input type="number" class="input-value" id="maxDelayBing" value="12" min="1">
+        
+        <p class="text-pink-500 text-xs mb-1">TARGET PENCARIAN</p>
+        <input id="targetCari" type="number" value="20" 
+               class="w-full border-2 border-sky-200 focus:border-pink-400 rounded-xl p-3 text-center text-2xl font-bold text-gray-700 outline-none mb-4">
+        
+        <div class="flex gap-3">
+          <div class="flex-1">
+            <p class="text-pink-500 text-xs mb-1">DURASI MIN</p>
+            <input id="durasiMin" type="number" value="4" 
+                   class="w-full border-2 border-sky-200 rounded-xl p-3 text-center text-xl font-bold text-gray-700 outline-none">
+          </div>
+          <div class="flex-1">
+            <p class="text-pink-500 text-xs mb-1">DURASI MAX</p>
+            <input id="durasiMax" type="number" value="8" 
+                   class="w-full border-2 border-sky-200 rounded-xl p-3 text-center text-xl font-bold text-gray-700 outline-none">
+          </div>
         </div>
+
+        <p class="text-center mt-4 text-4xl font-bold text-pink-500">
+          <span id="currentCari">00</span><span class="text-sky-400">/20</span>
+        </p>
       </div>
-      <div class="status" id="statusBing">STANDBY</div>
-      <div class="counter"><span id="currentBing">00</span> / <span id="totalBing">20</span></div>
     </div>
 
-    <button class="btn-execute" id="executeBtn">EKSEKUSI OPERASI</button>
+    <!-- SYSTEM ACTIVITY LOG -->
+    <div class="bg-white rounded-2xl shadow-lg p-4">
+      <p class="text-sky-600 font-semibold text-sm mb-2">SYSTEM ACTIVITY LOG</p>
+      <div id="logBox" class="bg-gray-50 rounded-lg p-3 h-24 overflow-y-auto text-xs font-mono text-gray-600">
+        <p>> SYSTEM INITIALIZED...</p>
+        <p>> WAITING FOR INPUT...</p>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    let msnActive = false;
-    let bingActive = false;
-    let msnCounter = 0;
-    let bingCounter = 0;
-    let msnTimeout = null;
-    let bingTimeout = null;
+    const btnStart = document.getElementById('btnStart');
+    const logBox = document.getElementById('logBox');
+    
+    function addLog(text) {
+      const p = document.createElement('p');
+      p.textContent = `> ${text}`;
+      logBox.appendChild(p);
+      logBox.scrollTop = logBox.scrollHeight;
+    }
 
-    // Toggle MSN
-    document.getElementById('
+    btnStart.addEventListener('click', () => {
+      addLog('TOMBOL START DITEKAN');
+      addLog('FUNGSI OTOMASI TIDAK TERSEDIA');
+      alert('Maaf, fungsi otomasi tidak bisa dijalankan karena melanggar TOS. Ini hanya template UI.');
+    });
+  </script>
+</body>
+</html>
