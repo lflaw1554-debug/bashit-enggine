@@ -1,106 +1,194 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>SEARCH + MSN DASHBOARD</title>
+<title>Activity Dashboard Simulator</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
 
 body{
+  min-height:100vh;
+
   background:
   linear-gradient(
     180deg,
-    #ffc0cb,
+    #ffb6d9,
     #ffffff,
     #1e3a8a
   );
-
-  min-height:100vh;
 }
 
 .card{
-  background:rgba(255,255,255,0.9);
-  padding:20px;
-  border-radius:20px;
-  margin-bottom:20px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.15);
-}
+  background:rgba(255,255,255,0.92);
 
-.title{
-  font-size:18px;
-  font-weight:bold;
-  margin-bottom:15px;
+  border-radius:22px;
+
+  padding:20px;
+
+  box-shadow:
+  0 10px 25px rgba(0,0,0,0.12);
 }
 
 .input{
   width:100%;
+
   padding:12px;
-  border-radius:12px;
-  border:1px solid #ccc;
-  margin-top:10px;
-  margin-bottom:10px;
+
+  border-radius:14px;
+
+  border:1px solid #ddd;
+
+  margin-top:8px;
 }
 
 .btn{
   width:100%;
-  padding:15px;
+
+  padding:14px;
+
   border:none;
-  border-radius:14px;
+
+  border-radius:16px;
+
   font-weight:bold;
-  cursor:pointer;
-  margin-bottom:15px;
+
+  transition:0.2s;
 }
 
-.start{
-  background:#2563eb;
-  color:white;
-}
-
-.stop{
-  background:#ef4444;
-  color:white;
-}
-
-.log-box{
-  height:220px;
-  overflow:auto;
-  background:#f5f5f5;
-  border-radius:12px;
-  padding:15px;
-  font-size:14px;
+.btn:hover{
+  transform:scale(1.02);
 }
 
 .progress{
   width:100%;
-  height:10px;
+
+  height:12px;
+
   background:#ddd;
+
   border-radius:999px;
+
   overflow:hidden;
-  margin-top:20px;
 }
 
-.progress-bar{
+.progress-fill{
   width:0%;
+
   height:100%;
+
   background:#2563eb;
+
+  transition:0.2s;
+}
+
+.log-box{
+  height:240px;
+
+  overflow:auto;
+
+  background:#f5f5f5;
+
+  border-radius:16px;
+
+  padding:15px;
+
+  font-size:13px;
 }
 
 .counter{
+  font-size:50px;
+
+  font-weight:900;
+
   text-align:center;
-  font-size:42px;
-  font-weight:bold;
 }
 
-iframe{
-  width:100%;
-  height:400px;
-  border:none;
-  border-radius:12px;
+.viewer{
+  height:280px;
+
+  border-radius:16px;
+
   background:white;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  flex-direction:column;
+
+  overflow:hidden;
+}
+
+.fake-browser{
+  width:100%;
+
+  height:100%;
+
+  background:white;
+}
+
+.browser-top{
+  height:40px;
+
+  background:#ececec;
+
+  display:flex;
+
+  align-items:center;
+
+  padding:0 12px;
+
+  gap:8px;
+}
+
+.dot{
+  width:12px;
+
+  height:12px;
+
+  border-radius:999px;
+}
+
+.urlbar{
+  flex:1;
+
+  background:white;
+
+  border-radius:999px;
+
+  padding:6px 12px;
+
+  font-size:12px;
+
+  overflow:hidden;
+
+  white-space:nowrap;
+}
+
+.browser-content{
+  height:calc(100% - 40px);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:18px;
+
+  font-weight:bold;
+
+  color:#444;
+
+  text-align:center;
+
+  padding:20px;
 }
 
 </style>
@@ -108,55 +196,70 @@ iframe{
 
 <body class="p-4 flex justify-center">
 
-<div class="w-full max-w-md">
+<div class="w-full max-w-md space-y-5">
 
   <!-- HEADER -->
 
-  <div class="mb-6">
+  <div>
 
     <h1 class="text-3xl font-black">
-      DEMO DASHBOARD
+      ACTIVITY DASHBOARD
     </h1>
 
     <p class="text-sm text-gray-700">
-      Search + MSN Viewer
+      Search + MSN Simulation
     </p>
 
   </div>
 
   <!-- SEARCH -->
 
-  <div class="card">
+  <div class="card space-y-4">
 
-    <div class="title">
-      SEARCH ENGINE
+    <h2 class="font-bold text-lg">
+      SEARCH SETTING
+    </h2>
+
+    <div>
+
+      <label>
+        Jumlah Search
+      </label>
+
+      <input
+        type="number"
+        id="search-count"
+        value="5"
+        class="input"
+      >
+
     </div>
 
-    <label>Jumlah Search</label>
+    <div>
 
-    <input
-      type="number"
-      id="search-target"
-      value="3"
-      class="input"
-    >
+      <label>
+        Durasi per Search (detik)
+      </label>
 
-    <label>Durasi Search (detik)</label>
+      <input
+        type="number"
+        id="search-delay"
+        value="5"
+        class="input"
+      >
 
-    <input
-      type="number"
-      id="search-delay"
-      value="6"
-      class="input"
-    >
+    </div>
 
-    <label>Query Search</label>
+    <div>
 
-    <textarea
-      id="query-box"
-      class="input"
-      style="height:140px"
-    >resep sate
+      <label>
+        Custom Query
+      </label>
+
+      <textarea
+        id="query-box"
+        class="input h-40"
+      >resep sate
 abdullah
 akhmad sodik
 muhammad
@@ -177,61 +280,112 @@ wayang golek
 oppo flip
 ramayana</textarea>
 
+    </div>
+
   </div>
 
   <!-- MSN -->
 
-  <div class="card">
+  <div class="card space-y-4">
 
-    <div class="title">
-      MSN NEWS
+    <h2 class="font-bold text-lg">
+      MSN LINK SETTING
+    </h2>
+
+    <div>
+
+      <label>
+        Jumlah MSN Visit
+      </label>
+
+      <input
+        type="number"
+        id="msn-count"
+        value="3"
+        class="input"
+      >
+
     </div>
 
-    <label>Jumlah MSN</label>
+    <div class="text-sm text-gray-700">
 
-    <input
-      type="number"
-      id="msn-target"
-      value="2"
-      class="input"
-    >
+      <div>
+        https://www.msn.com/en-gb/travel/news/holidaymakers-told-to-arrive-four-hours-early-or-miss-flights-in-ees-chaos/ss-AA22lkS6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp
+      </div>
+
+      <div>
+        https://www.msn.com/en-gb/money
+      </div>
+
+      <div>
+        https://www.msn.com/en-gb/travel
+      </div>
+
+    </div>
 
   </div>
 
   <!-- BUTTON -->
 
-  <button
-    id="start-btn"
-    class="btn start"
-  >
-    START BOT
-  </button>
+  <div class="grid grid-cols-2 gap-4">
 
-  <button
-    id="stop-btn"
-    class="btn stop"
-  >
-    STOP BOT
-  </button>
+    <button
+      id="start-btn"
+      class="btn bg-blue-600 text-white"
+    >
+      START
+    </button>
+
+    <button
+      id="stop-btn"
+      class="btn bg-red-500 text-white"
+    >
+      STOP
+    </button>
+
+  </div>
 
   <!-- VIEWER -->
 
   <div class="card">
 
-    <div class="title">
-      VIEWER
-    </div>
+    <div class="viewer">
 
-    <iframe
-      id="viewer-frame"
-      src=""
-    ></iframe>
+      <div class="fake-browser">
+
+        <div class="browser-top">
+
+          <div class="dot bg-red-400"></div>
+
+          <div class="dot bg-yellow-400"></div>
+
+          <div class="dot bg-green-400"></div>
+
+          <div
+            id="urlbar"
+            class="urlbar"
+          >
+            about:blank
+          </div>
+
+        </div>
+
+        <div
+          id="viewer-content"
+          class="browser-content"
+        >
+          MENUNGGU START...
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
 
   <!-- STATUS -->
 
-  <div class="card">
+  <div class="card space-y-4">
 
     <div
       id="counter"
@@ -243,8 +397,8 @@ ramayana</textarea>
     <div class="progress">
 
       <div
-        id="progress-bar"
-        class="progress-bar"
+        id="progress-fill"
+        class="progress-fill"
       ></div>
 
     </div>
@@ -255,9 +409,9 @@ ramayana</textarea>
 
   <div class="card">
 
-    <div class="title">
+    <h2 class="font-bold text-lg mb-4">
       ACTIVITY LOG
-    </div>
+    </h2>
 
     <div
       id="log-box"
@@ -277,31 +431,18 @@ ramayana</textarea>
 const msnLinks = [
 
   "https://www.msn.com/en-gb/travel/news/holidaymakers-told-to-arrive-four-hours-early-or-miss-flights-in-ees-chaos/ss-AA22lkS6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/news/uknews/starmer-under-threat-over-trojan-horse-plot-to-smuggle-rival-back-to-replace-him/ar-AA22wWGb?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/entertainment/tv/badenoch-starmer-s-finished-and-polanski-s-a-joke-we-re-the-only-serious-choice/ar-AA22xk97?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/entertainment/news/king-charles-allegedly-slams-top-dog-authority-prince-william-told-to-know-his-place/ar-AA22wXBc?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/travel/news/coventry-airport-to-close-after-90-years-with-all-flights-scrapped-within-weeks/ar-AA22wiSz?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/money/other/aldi-and-lidl-rule-could-be-forced-to-change-as-uk-supermarkets-demand-crackdown/ar-AA22wfrY?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/news/uknews/starmer-s-last-ditch-plea-as-labour-braces-for-local-election-disaster/ar-AA22yUxG?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/travel/news/uk-staycation-demand-rises-as-airlines-told-they-can-cancel-flights/ss-AA22qn5L?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/lifestyle/family-relationships/report-queen-camilla-s-ex-husband-now-right-hand-man-to-princess-anne/ss-AA22i4Ea?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/foodanddrink/other/binman-s-rule-to-anyone-recycling-tins-and-jars-with-labels-left-on/ar-AA1X2DRu?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/money/other/britain-sleepwalking-towards-jobless-generation-warn-retailers/ar-AA22AqRQ?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/news/uknews/keir-starmer-to-use-eu-reset-to-stave-off-leadership-challenge/ar-AA22zFsq?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/money/technology/all-gmail-users-urged-to-check-one-setting-now-as-important-warning-issued/ar-AA22ueZv?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  
   "https://www.msn.com/en-gb/news/world/sky-news-halted-for-ultimate-humiliation-breaking-news-alert-for-donald-trump/ar-AA22vBj6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
 
 ];
@@ -312,7 +453,7 @@ let stopProcess = false;
 // LOG
 // ======================
 
-function writeLog(msg,color="#222"){
+function writeLog(msg,color="#333"){
 
   const log =
     document.getElementById(
@@ -346,33 +487,49 @@ function sleep(ms){
 }
 
 // ======================
+// VIEWER
+// ======================
+
+function setViewer(url,text){
+
+  document.getElementById(
+    "urlbar"
+  ).innerText = url;
+
+  document.getElementById(
+    "viewer-content"
+  ).innerHTML = text;
+
+}
+
+// ======================
 // PROGRESS
 // ======================
 
-async function progress(sec){
+async function runProgress(sec){
 
-  const bar =
+  const fill =
     document.getElementById(
-      "progress-bar"
+      "progress-fill"
     );
+
+  fill.style.width = "0%";
 
   for(let i=0;i<=100;i++){
 
     if(stopProcess) return;
 
-    bar.style.width =
+    fill.style.width =
       i + "%";
 
     await sleep(sec * 10);
 
   }
 
-  bar.style.width = "0%";
-
 }
 
 // ======================
-// START BOT
+// MAIN BOT
 // ======================
 
 async function startBot(){
@@ -384,32 +541,6 @@ async function startBot(){
     "green"
   );
 
-  const frame =
-    document.getElementById(
-      "viewer-frame"
-    );
-
-  const searchTarget =
-    parseInt(
-      document.getElementById(
-        "search-target"
-      ).value
-    );
-
-  const searchDelay =
-    parseInt(
-      document.getElementById(
-        "search-delay"
-      ).value
-    );
-
-  const msnTarget =
-    parseInt(
-      document.getElementById(
-        "msn-target"
-      ).value
-    );
-
   const queries =
     document
       .getElementById(
@@ -420,17 +551,34 @@ async function startBot(){
       .map(v => v.trim())
       .filter(v => v);
 
+  const searchCount =
+    parseInt(
+      document.getElementById(
+        "search-count"
+      ).value
+    );
+
+  const searchDelay =
+    parseInt(
+      document.getElementById(
+        "search-delay"
+      ).value
+    );
+
+  const msnCount =
+    parseInt(
+      document.getElementById(
+        "msn-count"
+      ).value
+    );
+
   let done = 0;
 
   // ======================
-  // SEARCH LOOP
+  // SEARCH
   // ======================
 
-  for(
-    let i=0;
-    i<searchTarget;
-    i++
-  ){
+  for(let i=0;i<searchCount;i++){
 
     if(stopProcess){
 
@@ -451,21 +599,29 @@ async function startBot(){
         )
       ];
 
+    setViewer(
+      "https://www.bing.com/search?q=" +
+      encodeURIComponent(q),
+
+      `
+      <div>
+        <div style="font-size:22px">
+          SEARCHING...
+        </div>
+
+        <div style="margin-top:15px">
+          ${q}
+        </div>
+      </div>
+      `
+    );
+
     writeLog(
       `SEARCH: ${q}`,
       "#111"
     );
 
-    frame.src =
-      "https://www.bing.com/search?q=" +
-      encodeURIComponent(q);
-
-    await progress(searchDelay);
-
-    writeLog(
-      "KEMBALI KE MENU BOT",
-      "blue"
-    );
+    await runProgress(searchDelay);
 
     done++;
 
@@ -476,19 +632,15 @@ async function startBot(){
       .toString()
       .padStart(2,"0");
 
-    await sleep(1000);
+    await sleep(800);
 
   }
 
   // ======================
-  // MSN LOOP
+  // MSN
   // ======================
 
-  for(
-    let i=0;
-    i<msnTarget;
-    i++
-  ){
+  for(let i=0;i<msnCount;i++){
 
     if(stopProcess){
 
@@ -509,19 +661,28 @@ async function startBot(){
         )
       ];
 
+    setViewer(
+      link,
+
+      `
+      <div>
+        <div style="font-size:22px">
+          MEMBUKA MSN...
+        </div>
+
+        <div style="margin-top:15px;font-size:14px">
+          ${link}
+        </div>
+      </div>
+      `
+    );
+
     writeLog(
-      "MEMBUKA MSN NEWS",
+      "MEMBUKA MSN",
       "#111"
     );
 
-    frame.src = link;
-
-    await progress(searchDelay);
-
-    writeLog(
-      "KEMBALI KE MENU BOT",
-      "blue"
-    );
+    await runProgress(searchDelay);
 
     done++;
 
@@ -532,16 +693,32 @@ async function startBot(){
       .toString()
       .padStart(2,"0");
 
-    await sleep(1000);
+    await sleep(800);
 
   }
 
   // ======================
-  // SELESAI
+  // DONE
   // ======================
 
+  setViewer(
+    "about:finished",
+
+    `
+    <div>
+      <div style="font-size:24px;color:green">
+        BOT SELESAI
+      </div>
+
+      <div style="margin-top:15px">
+        Semua aktivitas telah selesai
+      </div>
+    </div>
+    `
+  );
+
   writeLog(
-    "BOT TELAH SELESAI DIGUNAKAN",
+    "SEMUA TASK SELESAI",
     "green"
   );
 
@@ -552,7 +729,7 @@ async function startBot(){
 }
 
 // ======================
-// START BUTTON
+// BUTTON
 // ======================
 
 document
@@ -563,10 +740,6 @@ document
     "click",
     startBot
   );
-
-// ======================
-// STOP BUTTON
-// ======================
 
 document
   .getElementById(
@@ -581,6 +754,16 @@ document
       writeLog(
         "STOP BUTTON DITEKAN",
         "red"
+      );
+
+      setViewer(
+        "about:stopped",
+
+        `
+        <div style="color:red">
+          BOT DIHENTIKAN
+        </div>
+        `
       );
 
     }
