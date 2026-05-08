@@ -95,6 +95,14 @@ body{
   font-weight:bold;
 }
 
+iframe{
+  width:100%;
+  height:400px;
+  border:none;
+  border-radius:12px;
+  background:white;
+}
+
 </style>
 </head>
 
@@ -129,7 +137,7 @@ body{
     <input
       type="number"
       id="search-target"
-      value="20"
+      value="3"
       class="input"
     >
 
@@ -184,7 +192,7 @@ ramayana</textarea>
     <input
       type="number"
       id="msn-target"
-      value="10"
+      value="2"
       class="input"
     >
 
@@ -205,6 +213,21 @@ ramayana</textarea>
   >
     STOP BOT
   </button>
+
+  <!-- VIEWER -->
+
+  <div class="card">
+
+    <div class="title">
+      VIEWER
+    </div>
+
+    <iframe
+      id="viewer-frame"
+      src=""
+    ></iframe>
+
+  </div>
 
   <!-- STATUS -->
 
@@ -253,7 +276,7 @@ ramayana</textarea>
 
 const msnLinks = [
 
-  ""https://www.msn.com/en-gb/travel/news/holidaymakers-told-to-arrive-four-hours-early-or-miss-flights-in-ees-chaos/ss-AA22lkS6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
+  "https://www.msn.com/en-gb/travel/news/holidaymakers-told-to-arrive-four-hours-early-or-miss-flights-in-ees-chaos/ss-AA22lkS6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
   "https://www.msn.com/en-gb/news/uknews/starmer-under-threat-over-trojan-horse-plot-to-smuggle-rival-back-to-replace-him/ar-AA22wWGb?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
   "https://www.msn.com/en-gb/entertainment/tv/badenoch-starmer-s-finished-and-polanski-s-a-joke-we-re-the-only-serious-choice/ar-AA22xk97?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
   "https://www.msn.com/en-gb/entertainment/news/king-charles-allegedly-slams-top-dog-authority-prince-william-told-to-know-his-place/ar-AA22wXBc?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
@@ -266,13 +289,11 @@ const msnLinks = [
   "https://www.msn.com/en-gb/money/other/britain-sleepwalking-towards-jobless-generation-warn-retailers/ar-AA22AqRQ?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
   "https://www.msn.com/en-gb/news/uknews/keir-starmer-to-use-eu-reset-to-stave-off-leadership-challenge/ar-AA22zFsq?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
   "https://www.msn.com/en-gb/money/technology/all-gmail-users-urged-to-check-one-setting-now-as-important-warning-issued/ar-AA22ueZv?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/news/world/sky-news-halted-for-ultimate-humiliation-breaking-news-alert-for-donald-trump/ar-AA22vBj6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp"
+  "https://www.msn.com/en-gb/news/world/sky-news-halted-for-ultimate-humiliation-breaking-news-alert-for-donald-trump/ar-AA22vBj6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
 
 ];
 
 let stopProcess = false;
-
-let botWindow = null;
 
 // ======================
 // LOG
@@ -350,6 +371,11 @@ async function startBot(){
     "green"
   );
 
+  const frame =
+    document.getElementById(
+      "viewer-frame"
+    );
+
   const searchTarget =
     parseInt(
       document.getElementById(
@@ -382,26 +408,6 @@ async function startBot(){
       .filter(v => v);
 
   let done = 0;
-
-  // ======================
-  // BUKA POPUP SEKALI
-  // ======================
-
-  botWindow =
-    window.open(
-      "",
-      "BOT_WINDOW"
-    );
-
-  if(!botWindow){
-
-    alert(
-      "Popup diblokir browser!"
-    );
-
-    return;
-
-  }
 
   // ======================
   // SEARCH LOOP
@@ -437,7 +443,7 @@ async function startBot(){
       "#111"
     );
 
-    botWindow.location.href =
+    frame.src =
       "https://www.bing.com/search?q=" +
       encodeURIComponent(q);
 
@@ -495,8 +501,7 @@ async function startBot(){
       "#111"
     );
 
-    botWindow.location.href =
-      link;
+    frame.src = link;
 
     await progress(searchDelay);
 
@@ -519,21 +524,11 @@ async function startBot(){
   }
 
   // ======================
-  // CLOSE POPUP
-  // ======================
-
-  if(botWindow){
-
-    botWindow.close();
-
-  }
-
-  // ======================
-  // DONE
+  // SELESAI
   // ======================
 
   writeLog(
-    "BOT TELAH SELESAI",
+    "BOT TELAH SELESAI DIGUNAKAN",
     "green"
   );
 
@@ -569,12 +564,6 @@ document
     () => {
 
       stopProcess = true;
-
-      if(botWindow){
-
-        botWindow.close();
-
-      }
 
       writeLog(
         "STOP BUTTON DITEKAN",
