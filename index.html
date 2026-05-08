@@ -1,3 +1,8 @@
+# Modern Search + MSN Dashboard
+
+Buat file `index.html` lalu paste semua code ini.
+
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -62,4 +67,363 @@ body {
   background: #1696e8;
   color: white;
   padding: 16px;
+  font-size: 22px;
+  cursor: pointer;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+
+.log {
+  background: #f2f2f2;
+  border-radius: 10px;
+  padding: 15px;
+  height: 220px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+.progress {
+  width: 100%;
+  height: 8px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 10px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: white;
+  transition: 0.2s;
+}
+
+.query-box {
+  width: 100%;
+  min-height: 100px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+select {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+</style>
+</head>
+<body>
+
+<!-- MSN -->
+<div class="card">
+
+  <div class="title">
+    ENGINE MSN NEWS
+
+    <select id="msn-status">
+      <option>ON</option>
+      <option>OFF</option>
+    </select>
+  </div>
+
+  <label>TARGET KLIK</label>
+
+  <input
+    id="msn-target"
+    class="input"
+    type="number"
+    value="5"
+  />
+
+  <div class="counter">
+    <span id="msn-done">00</span>/<span id="msn-total">00</span>
+  </div>
+
+</div>
+
+<button class="btn" id="startBtn">
+  START PENCARIAN
+</button>
+
+<!-- SEARCH -->
+<div class="card">
+
+  <div class="title">
+    ENGINE BING SEARCH
+
+    <select id="bing-status">
+      <option>ON</option>
+      <option>OFF</option>
+    </select>
+  </div>
+
+  <label>TARGET PENCARIAN</label>
+
+  <input
+    id="bing-target"
+    class="input"
+    type="number"
+    value="10"
+  />
+
+  <div class="row">
+
+    <div class="col">
+      <label>DURASI MIN</label>
+
+      <input
+        id="minD"
+        class="input"
+        type="number"
+        value="3"
+      />
+    </div>
+
+    <div class="col">
+      <label>DURASI MAX</label>
+
+      <input
+        id="maxD"
+        class="input"
+        type="number"
+        value="6"
+      />
+    </div>
+
+  </div>
+
+  <label>DAFTAR QUERY</label>
+
+  <textarea
+    id="queryBox"
+    class="query-box"
+  >
+berita teknologi
+cuaca indonesia
+wisata bali
+resep makanan
+berita gaming
+  </textarea>
+
+  <div class="counter">
+    <span id="bing-done">00</span>/<span id="bing-total">00</span>
+  </div>
+
+  <div class="progress">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+
+</div>
+
+<!-- LOG -->
+<div class="card">
+
+  <div class="title">
+    SYSTEM ACTIVITY LOG
+  </div>
+
+  <div class="log" id="log-box"></div>
+
+</div>
+
+<script>
+
+// ======================
+// MSN LINKS
+// ======================
+
+const msnLinks = [
+  "https://www.msn.com/en-gb/news",
+  "https://www.msn.com/en-gb/travel",
+  "https://www.msn.com/en-gb/money",
+  "https://www.msn.com/en-gb/foodanddrink"
+];
+
+// ======================
+// LOG
+// ======================
+
+function writeLog(msg, color = "#333") {
+
+  const log =
+    document.getElementById("log-box");
+
+  const time =
+    new Date().toLocaleTimeString();
+
+  log.innerHTML += `
+    <div style="color:${color}">
+      [${time}] ${msg}
+    </div>
+  `;
+
+  log.scrollTop = log.scrollHeight;
+
+}
+
+// ======================
+// SLEEP
+// ======================
+
+function sleep(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+// ======================
+// START
+// ======================
+
+async function startEngine() {
+
+  const msnTarget =
+    parseInt(document.getElementById("msn-target").value);
+
+  const bingTarget =
+    parseInt(document.getElementById("bing-target").value);
+
+  const minD =
+    parseInt(document.getElementById("minD").value);
+
+  const maxD =
+    parseInt(document.getElementById("maxD").value);
+
+  const msnStatus =
+    document.getElementById("msn-status").value;
+
+  const bingStatus =
+    document.getElementById("bing-status").value;
+
+  const queries =
+    document
+      .getElementById("queryBox")
+      .value
+      .split("\n")
+      .map(v => v.trim())
+      .filter(v => v);
+
+  document.getElementById("msn-total").innerText = msnTarget;
+  document.getElementById("bing-total").innerText = bingTarget;
+
+  writeLog("SYSTEM INITIALIZED...", "#111");
+
+  // ======================
+  // MSN
+  // ======================
+
+  if (msnStatus === "ON") {
+
+    for (let i = 1; i <= msnTarget; i++) {
+
+      const link =
+        msnLinks[
+          Math.floor(Math.random() * msnLinks.length)
+        ];
+
+      writeLog(`MEMBUKA MSN ${i}/${msnTarget}`);
+
+      window.open(link, "_blank");
+
+      document.getElementById("msn-done").innerText =
+        i.toString().padStart(2, "0");
+
+      await sleep(4000);
+
+    }
+
+  }
+
+  // ======================
+  // SEARCH
+  // ======================
+
+  if (bingStatus === "ON") {
+
+    for (let i = 1; i <= bingTarget; i++) {
+
+      const q =
+        queries[
+          Math.floor(Math.random() * queries.length)
+        ];
+
+      writeLog(`SEARCH: ${q}`, "#000");
+
+      window.open(
+        "https://www.bing.com/search?q=" +
+        encodeURIComponent(q),
+        "_blank"
+      );
+
+      document.getElementById("bing-done").innerText =
+        i.toString().padStart(2, "0");
+
+      const delay =
+        Math.floor(
+          Math.random() * (maxD - minD + 1)
+        ) + minD;
+
+      const bar =
+        document.getElementById("progress-bar");
+
+      let progress = 0;
+
+      const step = 100 / (delay * 10);
+
+      for (let x = 0; x < delay * 10; x++) {
+
+        progress += step;
+
+        bar.style.width = progress + "%";
+
+        await sleep(100);
+
+      }
+
+      bar.style.width = "0%";
+
+    }
+
+  }
+
+  writeLog("SEMUA TUGAS SELESAI", "green");
+
+}
+
+// ======================
+// BUTTON
+// ======================
+
+document
+  .getElementById("startBtn")
+  .addEventListener(
+    "click",
+    startEngine
+  );
+
+</script>
+
+</body>
 </html>
+```
+
+## Cara Pakai
+
+1. Buat file `index.html`
+2. Paste semua code
+3. Buka file di browser
+4. Klik `START PENCARIAN`
+5. Isi query bebas di textarea
+
+## Fitur
+
+* UI mirip screenshot
+* Engine MSN
+* Engine Search
+* Query custom
+* Progress bar
+* Activity log
+* Delay random
+* Counter otomatis
