@@ -1,658 +1,145 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>BOT SEARCH + MSN</title>
-
-<style>
-
-body{
-  margin:0;
-  padding:20px;
-  font-family:Arial,sans-serif;
-
-  background:
-  linear-gradient(
-    180deg,
-    #ffc0cb,
-    #ffffff,
-    #1e3a8a
-  );
-
-  min-height:100vh;
-}
-
-.card{
-
-  background:rgba(255,255,255,0.9);
-
-  border-radius:20px;
-
-  padding:20px;
-
-  margin-bottom:20px;
-
-  box-shadow:0 5px 15px rgba(0,0,0,0.15);
-
-}
-
-.title{
-
-  font-size:24px;
-
-  font-weight:bold;
-
-  margin-bottom:20px;
-
-}
-
-label{
-
-  display:block;
-
-  margin-top:15px;
-
-  margin-bottom:5px;
-
-  font-weight:bold;
-
-}
-
-input,
-textarea,
-select{
-
-  width:100%;
-
-  padding:12px;
-
-  border-radius:12px;
-
-  border:1px solid #ccc;
-
-  box-sizing:border-box;
-
-}
-
-textarea{
-
-  height:140px;
-
-  resize:none;
-
-}
-
-.row{
-
-  display:flex;
-
-  gap:15px;
-
-}
-
-.col{
-
-  flex:1;
-
-}
-
-button{
-
-  width:100%;
-
-  padding:15px;
-
-  border:none;
-
-  border-radius:14px;
-
-  margin-top:15px;
-
-  font-size:18px;
-
-  font-weight:bold;
-
-  cursor:pointer;
-
-}
-
-.start{
-
-  background:#2563eb;
-
-  color:white;
-
-}
-
-.stop{
-
-  background:#ef4444;
-
-  color:white;
-
-}
-
-.log{
-
-  height:250px;
-
-  overflow-y:auto;
-
-  background:#f3f4f6;
-
-  padding:15px;
-
-  border-radius:14px;
-
-}
-
-.progress{
-
-  width:100%;
-
-  height:12px;
-
-  background:#ddd;
-
-  border-radius:999px;
-
-  overflow:hidden;
-
-  margin-top:20px;
-
-}
-
-.progress-bar{
-
-  width:0%;
-
-  height:100%;
-
-  background:#2563eb;
-
-}
-
-.counter{
-
-  text-align:center;
-
-  font-size:42px;
-
-  font-weight:bold;
-
-  margin-top:10px;
-
-}
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADZIIM ELITE V12</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
 
-<!-- PANEL -->
+<body class="p-4 flex justify-center">
+  <div class="w-full max-w-md">
 
-<div class="card">
+    <div class="mb-8 mt-4 text-left">
+      <h1 class="text-2xl font-black tracking-tighter italic uppercase">
+        ADZIIM
+        <span class="gold-text">DIAMON 23 😎</span>
+      </h1>
 
-  <div class="title">
-    BOT SEARCH + MSN
-  </div>
+      <p class="text-[9px] gold-text tracking-[0.4em] font-bold">
+        BOTT MICROSOFT BING PRO PLAYER
+      </p>
 
-  <label>STATUS SEARCH</label>
+      <div class="h-[1px] bg-yellow-900/30 mt-2 w-full"></div>
+    </div>
 
-  <select id="searchStatus">
-    <option>ON</option>
-    <option>OFF</option>
-  </select>
+    <!-- MSN -->
+    <div class="bg-card p-5 mb-4 relative">
 
-  <label>STATUS MSN</label>
+      <div class="flex justify-between items-center mb-4 text-gray-500">
+        <h2 class="text-xs font-bold uppercase tracking-widest">
+          Engine MSN News
+        </h2>
 
-  <select id="msnStatus">
-    <option>ON</option>
-    <option>OFF</option>
-  </select>
+        <select id="msn-status"
+          class="bg-black/20 text-[10px] font-bold border border-black/10 px-2 py-1 rounded text-white outline-none">
+          <option value="ON" class="text-black">ON</option>
+          <option value="OFF" class="text-black">OFF</option>
+        </select>
+      </div>
 
-  <div class="row">
+      <div class="mb-4">
+        <label class="text-[8px] gold-text font-bold uppercase mb-1">
+          Target Klik
+        </label>
 
-    <div class="col">
+        <input type="number" id="msn-target" value="11"
+          class="w-full input-box p-3 text-lg" />
+      </div>
 
-      <label>JUMLAH SEARCH</label>
+      <div class="text-center">
+        <div class="text-4xl font-black italic tracking-tighter">
+          <span id="msn-done">00</span>
 
-      <input
-        type="number"
-        id="searchTarget"
-        value="3"
-      />
+          <span class="text-zinc-800 text-2xl">
+            /
+            <span id="msn-total">11</span>
+          </span>
+        </div>
+      </div>
 
     </div>
 
-    <div class="col">
+    <button id="btn-execute"
+      onclick="runProPlayer()"
+      class="w-full btn-yellow py-2 rounded-sm text-sm uppercase shadow-xl">
+      STAR PENCARIAN
+    </button>
 
-      <label>JUMLAH MSN</label>
+    <!-- BING -->
+    <div class="bg-card p-5 mb-4">
 
-      <input
-        type="number"
-        id="msnTarget"
-        value="3"
-      />
+      <div class="flex justify-between items-center mb-4 text-gray-500">
+
+        <h2 class="text-xs font-bold uppercase tracking-widest">
+          Engine Bing Search
+        </h2>
+
+        <select id="bing-status"
+          class="bg-black/20 text-[10px] font-bold border border-black/10 px-2 py-1 rounded text-white outline-none">
+          <option value="ON" class="text-black">ON</option>
+          <option value="OFF" class="text-black">OFF</option>
+        </select>
+
+      </div>
+
+      <div class="mb-4">
+        <label class="text-[8px] gold-text font-bold uppercase mb-1">
+          Target Pencarian
+        </label>
+
+        <input type="number" id="bing-target" value="20"
+          class="w-full input-box p-3 text-lg" />
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 mb-4">
+
+        <div>
+          <label class="text-[8px] gold-text font-bold uppercase">
+            Durasi Min
+          </label>
+
+          <input type="number" id="minD" value="4"
+            class="w-full input-box p-2 text-sm" />
+        </div>
+
+        <div>
+          <label class="text-[8px] gold-text font-bold uppercase">
+            Durasi Max
+          </label>
+
+          <input type="number" id="maxD" value="8"
+            class="w-full input-box p-2 text-sm" />
+        </div>
+
+      </div>
+
+      <div class="text-center">
+        <div class="text-4xl font-black italic tracking-tighter">
+
+          <span id="bing-done">00</span>
+
+          <span class="text-zinc-800 text-2xl">
+            /
+            <span id="bing-total">20</span>
+          </span>
+
+        </div>
+
+        <div class="progress-container">
+          <div id="progress-bar" class="progress-fill"></div>
+        </div>
+      </div>
 
     </div>
 
-  </div>
+    <!-- LOG -->
+    <div class="mb-6">
 
-  <label>QUERY SEARCH</label>
+      <h3 class="text-[9px] font-bold uppercase text-gray-600 mb-2 px-1 tracking-widest">
+        System Activity Log
+      </h3>
 
-  <textarea id="queryBox">
-resep sate
-abdullah
-akhmad sodik
-muhammad
-kajian ust syafiq
-alamussunah
-laptop gaming
-bunga bugenfil
-tanaman yang beracun
-tablet gaming
-harga pajero
-iphone 18
-resep soto solo
-tembok ratapan solo
-prabowo
-penyanyi terkenal jawa tengah
-lawang sewu
-wayang golek
-oppo flip
-ramayana
-  </textarea>
-
-  <button
-    class="start"
-    id="startBtn"
-  >
-    START BOT
-  </button>
-
-  <button
-    class="stop"
-    id="stopBtn"
-  >
-    STOP BOT
-  </button>
-
-</div>
-
-<!-- STATUS -->
-
-<div class="card">
-
-  <div class="title">
-    STATUS BOT
-  </div>
-
-  <div
-    class="counter"
-    id="counter"
-  >
-    00
-  </div>
-
-  <div class="progress">
-
-    <div
-      class="progress-bar"
-      id="progressBar"
-    ></div>
-
-  </div>
-
-</div>
-
-<!-- LOG -->
-
-<div class="card">
-
-  <div class="title">
-    ACTIVITY LOG
-  </div>
-
-  <div
-    class="log"
-    id="logBox"
-  ></div>
-
-</div>
-
-<script>
-
-// ======================
-// DATA
-// ======================
-
-const msnLinks = [
-
-  "https://www.msn.com/en-gb/travel/news/holidaymakers-told-to-arrive-four-hours-early-or-miss-flights-in-ees-chaos/ss-AA22lkS6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/news/uknews/starmer-under-threat-over-trojan-horse-plot-to-smuggle-rival-back-to-replace-him/ar-AA22wWGb?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/entertainment/tv/badenoch-starmer-s-finished-and-polanski-s-a-joke-we-re-the-only-serious-choice/ar-AA22xk97?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/entertainment/news/king-charles-allegedly-slams-top-dog-authority-prince-william-told-to-know-his-place/ar-AA22wXBc?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/travel/news/coventry-airport-to-close-after-90-years-with-all-flights-scrapped-within-weeks/ar-AA22wiSz?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/money/other/aldi-and-lidl-rule-could-be-forced-to-change-as-uk-supermarkets-demand-crackdown/ar-AA22wfrY?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/news/uknews/starmer-s-last-ditch-plea-as-labour-braces-for-local-election-disaster/ar-AA22yUxG?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/travel/news/uk-staycation-demand-rises-as-airlines-told-they-can-cancel-flights/ss-AA22qn5L?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/lifestyle/family-relationships/report-queen-camilla-s-ex-husband-now-right-hand-man-to-princess-anne/ss-AA22i4Ea?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/foodanddrink/other/binman-s-rule-to-anyone-recycling-tins-and-jars-with-labels-left-on/ar-AA1X2DRu?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/money/other/britain-sleepwalking-towards-jobless-generation-warn-retailers/ar-AA22AqRQ?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/news/uknews/keir-starmer-to-use-eu-reset-to-stave-off-leadership-challenge/ar-AA22zFsq?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/money/technology/all-gmail-users-urged-to-check-one-setting-now-as-important-warning-issued/ar-AA22ueZv?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/news/world/sky-news-halted-for-ultimate-humiliation-breaking-news-alert-for-donald-trump/ar-AA22vBj6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-
-];
-
-let stopProcess = false;
-
-// ======================
-// LOG
-// ======================
-
-function writeLog(
-  msg,
-  color="#222"
-){
-
-  const log =
-    document.getElementById("logBox");
-
-  const time =
-    new Date().toLocaleTimeString();
-
-  log.innerHTML += `
-    <div style="color:${color}">
-      [${time}] ${msg}
-    </div>
-  `;
-
-  log.scrollTop =
-    log.scrollHeight;
-
-}
-
-// ======================
-// SLEEP
-// ======================
-
-function sleep(ms){
-
-  return new Promise(
-    r => setTimeout(r,ms)
-  );
-
-}
-
-// ======================
-// PROGRESS
-// ======================
-
-async function runProgress(sec){
-
-  const bar =
-    document.getElementById(
-      "progressBar"
-    );
-
-  bar.style.width = "0%";
-
-  const total = sec * 10;
-
-  for(let i=0;i<=total;i++){
-
-    if(stopProcess) return;
-
-    const percent =
-      (i / total) * 100;
-
-    bar.style.width =
-      percent + "%";
-
-    await sleep(100);
-
-  }
-
-  bar.style.width = "0%";
-
-}
-
-// ======================
-// START BOT
-// ======================
-
-async function startBot(){
-
-  stopProcess = false;
-
-  writeLog(
-    "BOT DIMULAI",
-    "green"
-  );
-
-  const searchStatus =
-    document.getElementById(
-      "searchStatus"
-    ).value;
-
-  const msnStatus =
-    document.getElementById(
-      "msnStatus"
-    ).value;
-
-  const searchTarget =
-    parseInt(
-      document.getElementById(
-        "searchTarget"
-      ).value
-    );
-
-  const msnTarget =
-    parseInt(
-      document.getElementById(
-        "msnTarget"
-      ).value
-    );
-
-  const queries =
-    document
-      .getElementById("queryBox")
-      .value
-      .split("\n")
-      .map(v => v.trim())
-      .filter(v => v);
-
-  const delay = 6;
-
-  let done = 0;
-
-  // ======================
-  // SEARCH
-  // ======================
-
-  if(searchStatus === "ON"){
-
-    for(
-      let i=0;
-      i<searchTarget;
-      i++
-    ){
-
-      if(stopProcess) return;
-
-      const q =
-        queries[
-          Math.floor(
-            Math.random() *
-            queries.length
-          )
-        ];
-
-      writeLog(
-        `MEMBUKA SEARCH: ${q}`,
-        "#111"
-      );
-
-      const tab =
-        window.open(
-          "https://www.bing.com/search?q=" +
-          encodeURIComponent(q),
-          "_blank"
-        );
-
-      // tunggu
-      await runProgress(delay);
-
-      // tutup tab
-      try{
-
-        if(tab){
-          tab.close();
-        }
-
-      }catch(e){}
-
-      // kembali ke bot
-      window.focus();
-
-      writeLog(
-        "KEMBALI KE MENU BOT",
-        "blue"
-      );
-
-      done++;
-
-      document.getElementById(
-        "counter"
-      ).innerText =
-        done
-        .toString()
-        .padStart(2,"0");
-
-      await sleep(1000);
-
-    }
-
-  }
-
-  // ======================
-  // MSN
-  // ======================
-
-  if(msnStatus === "ON"){
-
-    for(
-      let i=0;
-      i<msnTarget;
-      i++
-    ){
-
-      if(stopProcess) return;
-
-      const link =
-        msnLinks[
-          Math.floor(
-            Math.random() *
-            msnLinks.length
-          )
-        ];
-
-      writeLog(
-        "MEMBUKA MSN NEWS",
-        "#111"
-      );
-
-      const tab =
-        window.open(
-          link,
-          "_blank"
-        );
-
-      // tunggu
-      await runProgress(delay);
-
-      // tutup tab
-      try{
-
-        if(tab){
-          tab.close();
-        }
-
-      }catch(e){}
-
-      // kembali ke bot
-      window.focus();
-
-      writeLog(
-        "KEMBALI KE MENU BOT",
-        "blue"
-      );
-
-      done++;
-
-      document.getElementById(
-        "counter"
-      ).innerText =
-        done
-        .toString()
-        .padStart(2,"0");
-
-      await sleep(1000);
-
-    }
-
-  }
-
-  // ======================
-  // DONE
-  // ======================
-
-  writeLog(
-    "BOT TELAH SELESAI DIGUNAKAN",
-    "green"
-  );
-
-  alert(
-    "BOT TELAH SELESAI DIGUNAKAN"
-  );
-
-}
-
-// ======================
-// START BUTTON
-// ======================
-
-document
-  .getElementById("startBtn")
-  .addEventListener(
-    "click",
-    startBot
-  );
-
-// ======================
-// STOP BUTTON
-// ======================
-
-document
-  .getElementById("stopBtn")
-  .addEventListener(
-    "click",
-    () => {
-
-      stopProcess = true;
-
-      writeLog(
-        "BOT DIHENTIKAN",
-        "red"
-      );
-
-    }
-  );
-
-</script>
-
-</body>
-</html>
+      <div id="log-box" class="log-box rounded-sm">
