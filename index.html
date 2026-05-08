@@ -1,145 +1,120 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ADZIIM ELITE V12</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard Demo</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css" />
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="p-4 flex justify-center">
-  <div class="w-full max-w-md">
 
-    <div class="mb-8 mt-4 text-left">
-      <h1 class="text-2xl font-black tracking-tighter italic uppercase">
-        ADZIIM
-        <span class="gold-text">DIAMON 23 😎</span>
-      </h1>
+<div class="w-full max-w-md">
 
-      <p class="text-[9px] gold-text tracking-[0.4em] font-bold">
-        BOTT MICROSOFT BING PRO PLAYER
-      </p>
+  <!-- HEADER -->
 
-      <div class="h-[1px] bg-yellow-900/30 mt-2 w-full"></div>
+  <div class="mb-6">
+
+    <h1 class="text-3xl font-black">
+      DEMO DASHBOARD
+    </h1>
+
+    <p class="text-sm text-gray-600">
+      Search + MSN Viewer
+    </p>
+
+  </div>
+
+  <!-- SEARCH -->
+
+  <div class="card">
+
+    <h2 class="title">
+      SEARCH ENGINE
+    </h2>
+
+    <input
+      type="number"
+      id="search-target"
+      value="3"
+      class="input"
+    >
+
+    <textarea
+      id="query-box"
+      class="input h-40"
+    >berita teknologi
+wisata indonesia
+cuaca hari ini</textarea>
+
+  </div>
+
+  <!-- MSN -->
+
+  <div class="card">
+
+    <h2 class="title">
+      MSN NEWS
+    </h2>
+
+    <input
+      type="number"
+      id="msn-target"
+      value="2"
+      class="input"
+    >
+
+  </div>
+
+  <!-- BUTTON -->
+
+  <button
+    id="start-btn"
+    class="btn-start"
+  >
+    START
+  </button>
+
+  <!-- STATUS -->
+
+  <div class="card">
+
+    <div
+      id="counter"
+      class="counter"
+    >
+      00
     </div>
 
-    <!-- MSN -->
-    <div class="bg-card p-5 mb-4 relative">
+    <div class="progress">
 
-      <div class="flex justify-between items-center mb-4 text-gray-500">
-        <h2 class="text-xs font-bold uppercase tracking-widest">
-          Engine MSN News
-        </h2>
-
-        <select id="msn-status"
-          class="bg-black/20 text-[10px] font-bold border border-black/10 px-2 py-1 rounded text-white outline-none">
-          <option value="ON" class="text-black">ON</option>
-          <option value="OFF" class="text-black">OFF</option>
-        </select>
-      </div>
-
-      <div class="mb-4">
-        <label class="text-[8px] gold-text font-bold uppercase mb-1">
-          Target Klik
-        </label>
-
-        <input type="number" id="msn-target" value="11"
-          class="w-full input-box p-3 text-lg" />
-      </div>
-
-      <div class="text-center">
-        <div class="text-4xl font-black italic tracking-tighter">
-          <span id="msn-done">00</span>
-
-          <span class="text-zinc-800 text-2xl">
-            /
-            <span id="msn-total">11</span>
-          </span>
-        </div>
-      </div>
-
-    </div>
-
-    <button id="btn-execute"
-      onclick="runProPlayer()"
-      class="w-full btn-yellow py-2 rounded-sm text-sm uppercase shadow-xl">
-      STAR PENCARIAN
-    </button>
-
-    <!-- BING -->
-    <div class="bg-card p-5 mb-4">
-
-      <div class="flex justify-between items-center mb-4 text-gray-500">
-
-        <h2 class="text-xs font-bold uppercase tracking-widest">
-          Engine Bing Search
-        </h2>
-
-        <select id="bing-status"
-          class="bg-black/20 text-[10px] font-bold border border-black/10 px-2 py-1 rounded text-white outline-none">
-          <option value="ON" class="text-black">ON</option>
-          <option value="OFF" class="text-black">OFF</option>
-        </select>
-
-      </div>
-
-      <div class="mb-4">
-        <label class="text-[8px] gold-text font-bold uppercase mb-1">
-          Target Pencarian
-        </label>
-
-        <input type="number" id="bing-target" value="20"
-          class="w-full input-box p-3 text-lg" />
-      </div>
-
-      <div class="grid grid-cols-2 gap-4 mb-4">
-
-        <div>
-          <label class="text-[8px] gold-text font-bold uppercase">
-            Durasi Min
-          </label>
-
-          <input type="number" id="minD" value="4"
-            class="w-full input-box p-2 text-sm" />
-        </div>
-
-        <div>
-          <label class="text-[8px] gold-text font-bold uppercase">
-            Durasi Max
-          </label>
-
-          <input type="number" id="maxD" value="8"
-            class="w-full input-box p-2 text-sm" />
-        </div>
-
-      </div>
-
-      <div class="text-center">
-        <div class="text-4xl font-black italic tracking-tighter">
-
-          <span id="bing-done">00</span>
-
-          <span class="text-zinc-800 text-2xl">
-            /
-            <span id="bing-total">20</span>
-          </span>
-
-        </div>
-
-        <div class="progress-container">
-          <div id="progress-bar" class="progress-fill"></div>
-        </div>
-      </div>
+      <div
+        id="progress-bar"
+        class="progress-bar"
+      ></div>
 
     </div>
 
-    <!-- LOG -->
-    <div class="mb-6">
+  </div>
 
-      <h3 class="text-[9px] font-bold uppercase text-gray-600 mb-2 px-1 tracking-widest">
-        System Activity Log
-      </h3>
+  <!-- LOG -->
 
-      <div id="log-box" class="log-box rounded-sm">
+  <div class="card">
+
+    <div
+      id="log-box"
+      class="log-box"
+    ></div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
