@@ -15,12 +15,12 @@ Buat file `index.html` lalu paste semua code ini.
 body {
   margin: 0;
   padding: 20px;
-  background: #d9e8f2;
+  background: linear-gradient(180deg, #ffd6e7, #ffffff, #0f3d91);
   font-family: Arial, sans-serif;
 }
 
 .card {
-  background: #10f0a0;
+  background: linear-gradient(135deg, #ff8fc7, #ffffff, #3b82f6);
   border-radius: 14px;
   padding: 20px;
   margin-bottom: 20px;
@@ -131,6 +131,32 @@ select {
   </div>
 
   <label>TARGET KLIK</label>
+
+  <div class="row" style="margin-top:15px;">
+
+    <div class="col">
+      <label>DURASI MSN MIN</label>
+
+      <input
+        id="msnMinD"
+        class="input"
+        type="number"
+        value="3"
+      />
+    </div>
+
+    <div class="col">
+      <label>DURASI MSN MAX</label>
+
+      <input
+        id="msnMaxD"
+        class="input"
+        type="number"
+        value="6"
+      />
+    </div>
+
+  </div>
 
   <input
     id="msn-target"
@@ -265,7 +291,7 @@ const msnLinks = [
   "https://www.msn.com/en-gb/money/other/britain-sleepwalking-towards-jobless-generation-warn-retailers/ar-AA22AqRQ?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
   "https://www.msn.com/en-gb/news/uknews/keir-starmer-to-use-eu-reset-to-stave-off-leadership-challenge/ar-AA22zFsq?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
   "https://www.msn.com/en-gb/money/technology/all-gmail-users-urged-to-check-one-setting-now-as-important-warning-issued/ar-AA22ueZv?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/news/world/sky-news-halted-for-ultimate-humiliation-breaking-news-alert-for-donald-trump/ar-AA22vBj6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
+  "https://www.msn.com/en-gb/news/world/sky-news-halted-for-ultimate-humiliation-breaking-news-alert-for-donald-trump/ar-AA22vBj6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp"
 ];
 
 // ======================
@@ -313,6 +339,12 @@ async function startEngine() {
   const minD =
     parseInt(document.getElementById("minD").value);
 
+  const msnMinD =
+    parseInt(document.getElementById("msnMinD").value);
+
+  const msnMaxD =
+    parseInt(document.getElementById("msnMaxD").value);
+
   const maxD =
     parseInt(document.getElementById("maxD").value);
 
@@ -355,7 +387,14 @@ async function startEngine() {
       document.getElementById("msn-done").innerText =
         i.toString().padStart(2, "0");
 
-      await sleep(4000);
+      const msnDelay =
+        Math.floor(
+          Math.random() * (msnMaxD - msnMinD + 1)
+        ) + msnMinD;
+
+      writeLog(`DURASI MSN ${msnDelay} DETIK`);
+
+      await sleep(msnDelay * 1000);
 
     }
 
