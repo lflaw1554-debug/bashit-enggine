@@ -175,6 +175,10 @@ select {
   START PENCARIAN
 </button>
 
+<button class="btn" id="stopBtn" style="background:#ef4444;">
+  STOP
+</button>
+
 <!-- SEARCH -->
 <div class="card">
 
@@ -242,12 +246,12 @@ harga pajero
 iphone 18
 resep soto solo
 tembok ratapan solo
-prabowo
+prabowo subianto
 penyanyi terkenal jawa tengah
 lawang sewu
 wayang golek
 oppo flip
-ramayana
+ramayana bali
   </textarea>
 
   <div class="counter">
@@ -291,7 +295,7 @@ const msnLinks = [
   "https://www.msn.com/en-gb/money/other/britain-sleepwalking-towards-jobless-generation-warn-retailers/ar-AA22AqRQ?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
   "https://www.msn.com/en-gb/news/uknews/keir-starmer-to-use-eu-reset-to-stave-off-leadership-challenge/ar-AA22zFsq?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
   "https://www.msn.com/en-gb/money/technology/all-gmail-users-urged-to-check-one-setting-now-as-important-warning-issued/ar-AA22ueZv?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
-  "https://www.msn.com/en-gb/news/world/sky-news-halted-for-ultimate-humiliation-breaking-news-alert-for-donald-trump/ar-AA22vBj6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp"
+  "https://www.msn.com/en-gb/news/world/sky-news-halted-for-ultimate-humiliation-breaking-news-alert-for-donald-trump/ar-AA22vBj6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
 ];
 
 // ======================
@@ -328,7 +332,11 @@ function sleep(ms) {
 // START
 // ======================
 
+let stopProcess = false;
+
 async function startEngine() {
+
+  stopProcess = false;
 
   const msnTarget =
     parseInt(document.getElementById("msn-target").value);
@@ -375,6 +383,11 @@ async function startEngine() {
 
     for (let i = 1; i <= msnTarget; i++) {
 
+      if (stopProcess) {
+        writeLog("PROCESS DIHENTIKAN", "red");
+        return;
+      }
+
       const link =
         msnLinks[
           Math.floor(Math.random() * msnLinks.length)
@@ -408,6 +421,11 @@ async function startEngine() {
 
     for (let i = 1; i <= bingTarget; i++) {
 
+      if (stopProcess) {
+        writeLog("PROCESS DIHENTIKAN", "red");
+        return;
+      }
+
       const q =
         queries[
           Math.floor(Math.random() * queries.length)
@@ -415,11 +433,25 @@ async function startEngine() {
 
       writeLog(`SEARCH: ${q}`, "#000");
 
-      window.open(
-        "https://www.bing.com/search?q=" +
-        encodeURIComponent(q),
-        "_blank"
-      );
+      const searchWindow = window.open(
+  "https://www.bing.com/search?q=" +
+  encodeURIComponent(q),
+  "_blank"
+);
+
+await sleep(delay * 1000);
+
+try {
+
+  window.focus();
+
+} catch (e) {}
+
+try {
+
+  searchWindow.close();
+
+} catch (e) {}
 
       document.getElementById("bing-done").innerText =
         i.toString().padStart(2, "0");
@@ -465,6 +497,24 @@ document
   .addEventListener(
     "click",
     startEngine
+  );
+
+// STOP BUTTON
+
+document
+  .getElementById("stopBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      stopProcess = true;
+
+      writeLog(
+        "STOP BUTTON DITEKAN",
+        "red"
+      );
+
+    }
   );
 
 </script>
