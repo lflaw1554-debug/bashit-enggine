@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SEARCH & MSN AUTO BOT</title>
+<title>SEARCH FLOW BOT</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -55,12 +55,6 @@ body{
   border-radius:16px;
 
   font-weight:bold;
-
-  transition:0.2s;
-}
-
-.btn:hover{
-  transform:scale(1.02);
 }
 
 .progress{
@@ -81,12 +75,10 @@ body{
   height:100%;
 
   background:#2563eb;
-
-  transition:0.2s;
 }
 
 .log-box{
-  height:250px;
+  height:240px;
 
   overflow:auto;
 
@@ -119,11 +111,11 @@ body{
   <div>
 
     <h1 class="text-3xl font-black">
-      SEARCH AUTO BOT
+      SEARCH FLOW BOT
     </h1>
 
     <p class="text-sm text-gray-700">
-      Search + MSN Activity Simulator
+      Search + MSN Flow Simulation
     </p>
 
   </div>
@@ -133,55 +125,33 @@ body{
   <div class="card space-y-4">
 
     <h2 class="font-bold text-lg">
-      CUSTOM SEARCH QUERY
+      SEARCH QUERY
     </h2>
 
-    <div>
+    <input
+      type="number"
+      id="search-count"
+      value="5"
+      class="input"
+      placeholder="Jumlah Search"
+    >
 
-      <label>
-        Jumlah Search
-      </label>
+    <input
+      type="number"
+      id="search-delay"
+      value="5"
+      class="input"
+      placeholder="Durasi Search"
+    >
 
-      <input
-        type="number"
-        id="search-count"
-        value="5"
-        class="input"
-      >
-
-    </div>
-
-    <div>
-
-      <label>
-        Durasi per Search (detik)
-      </label>
-
-      <input
-        type="number"
-        id="search-delay"
-        value="5"
-        class="input"
-      >
-
-    </div>
-
-    <div>
-
-      <label>
-        Query Search
-      </label>
-
-      <textarea
-        id="query-box"
-        class="input h-40"
-      >berita teknologi
+    <textarea
+      id="query-box"
+      class="input h-40"
+    >berita teknologi
 wisata indonesia
-cuaca hari ini
 tutorial javascript
+cuaca hari ini
 resep makanan</textarea>
-
-    </div>
 
   </div>
 
@@ -190,53 +160,31 @@ resep makanan</textarea>
   <div class="card space-y-4">
 
     <h2 class="font-bold text-lg">
-      CUSTOM MSN LINK
+      MSN LINK
     </h2>
 
-    <div>
+    <input
+      type="number"
+      id="msn-count"
+      value="3"
+      class="input"
+      placeholder="Jumlah MSN"
+    >
 
-      <label>
-        Jumlah MSN Visit
-      </label>
+    <input
+      type="number"
+      id="msn-delay"
+      value="5"
+      class="input"
+      placeholder="Durasi MSN"
+    >
 
-      <input
-        type="number"
-        id="msn-count"
-        value="3"
-        class="input"
-      >
-
-    </div>
-
-    <div>
-
-      <label>
-        Durasi MSN (detik)
-      </label>
-
-      <input
-        type="number"
-        id="msn-delay"
-        value="5"
-        class="input"
-      >
-
-    </div>
-
-    <div>
-
-      <label>
-        Link MSN
-      </label>
-
-      <textarea
-        id="msn-box"
-        class="input h-40"
-      >https://www.msn.com/en-gb/news
-https://www.msn.com/en-gb/money
-https://www.msn.com/en-gb/travel</textarea>
-
-    </div>
+    <textarea
+      id="msn-box"
+      class="input h-32"
+    >https://www.msn.com/en-gb/news
+https://www.msn.com/en-gb/travel
+https://www.msn.com/en-gb/money</textarea>
 
   </div>
 
@@ -248,21 +196,21 @@ https://www.msn.com/en-gb/travel</textarea>
       id="start-btn"
       class="btn bg-blue-600 text-white"
     >
-      START BOT
+      START
     </button>
 
     <button
       id="stop-btn"
       class="btn bg-red-500 text-white"
     >
-      STOP BOT
+      STOP
     </button>
 
   </div>
 
   <!-- STATUS -->
 
-  <div class="card space-y-4">
+  <div class="card">
 
     <div
       id="counter"
@@ -271,7 +219,7 @@ https://www.msn.com/en-gb/travel</textarea>
       00
     </div>
 
-    <div class="progress">
+    <div class="progress mt-4">
 
       <div
         id="progress-fill"
@@ -282,7 +230,7 @@ https://www.msn.com/en-gb/travel</textarea>
 
   </div>
 
-  <!-- ACTIVITY LOG -->
+  <!-- LOG -->
 
   <div class="card">
 
@@ -371,7 +319,7 @@ async function runProgress(sec){
 }
 
 // ======================
-// START BOT
+// MAIN BOT
 // ======================
 
 async function startBot(){
@@ -463,13 +411,28 @@ async function startBot(){
       "#111"
     );
 
-    window.open(
-      "https://www.bing.com/search?q=" +
-      encodeURIComponent(q),
-      "_blank"
-    );
+    const tab =
+      window.open(
+        "https://www.bing.com/search?q=" +
+        encodeURIComponent(q),
+        "_blank"
+      );
 
     await runProgress(searchDelay);
+
+    // kembali ke bot
+    window.focus();
+
+    writeLog(
+      "KEMBALI KE MENU BOT",
+      "blue"
+    );
+
+    if(tab){
+
+      tab.close();
+
+    }
 
     done++;
 
@@ -479,11 +442,6 @@ async function startBot(){
       done
       .toString()
       .padStart(2,"0");
-
-    writeLog(
-      `SELESAI SEARCH: ${q}`,
-      "blue"
-    );
 
     await sleep(1000);
 
@@ -515,16 +473,31 @@ async function startBot(){
       ];
 
     writeLog(
-      `MEMBUKA MSN`,
+      "MEMBUKA MSN",
       "#111"
     );
 
-    window.open(
-      link,
-      "_blank"
-    );
+    const tab =
+      window.open(
+        link,
+        "_blank"
+      );
 
     await runProgress(msnDelay);
+
+    // kembali ke bot
+    window.focus();
+
+    writeLog(
+      "KEMBALI KE MENU BOT",
+      "blue"
+    );
+
+    if(tab){
+
+      tab.close();
+
+    }
 
     done++;
 
@@ -534,11 +507,6 @@ async function startBot(){
       done
       .toString()
       .padStart(2,"0");
-
-    writeLog(
-      `SELESAI MSN`,
-      "blue"
-    );
 
     await sleep(1000);
 
