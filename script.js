@@ -18,74 +18,132 @@ const linkMsnKamu = [
 
 const keywordBingKamu = [
   'makanan sehat',
-  'diet kuu',
+  'diet kuu', 
   'mudah'
 ];
 
-// Terus di dalam fungsi runMsn(), ganti bagian ini:
-function runMsn() {
-  if (msnCounter >= targetMsn || !msnActive) {
-    clearInterval(msnInterval);
-    document.getElementById('statusMsn').innerText = 'COMPLETE';
-    return;
-  }
-  
-  // >>> INI CARA BUKA LINK MSN KAMU <<<
-  const urlMsn = linkMsnKamu[msnCounter % linkMsnKamu.length];
-  window.open(urlMsn, '_blank');
-  
-  msnCounter++;
-  updateCounter('Msn', msnCounter);
-  const delay = Math.random() * (maxDelayMsn - minDelayMsn) + minDelayMsn;
-  msnInterval = setTimeout(runMsn, delay);
-}
-
-// Di dalam fungsi runBing(), ganti bagian ini:
-function runBing() {
-  if (bingCounter >= targetBing || !bingActive) {
-    clearInterval(bingInterval);
-    document.getElementById('statusBing').innerText = 'COMPLETE';
-    return;
-  }
-  
-  // >>> INI CARA BUKA PENCARIAN DI WEB KAMU <<<
-  const keyword = keywordBingKamu[bingCounter % keywordBingKamu.length];
-  const urlBing = `https://website-kamu.com/search?q=${encodeURIComponent(keyword)}`;
-  window.open(urlBing, '_blank');
-  
-  bingCounter++;
-  updateCounter('Bing', bingCounter);
-  const delay = Math.random() * (maxDelayBing - minDelayBing) + minDelayBing;
-  bingInterval = setTimeout(runBing, delay);
-}
 let msnActive = false;
 let bingActive = false;
+let msnCounter = 0;
+let bingCounter = 0;
+let msnTimeout = null;
+let bingTimeout = null;
+
+// Helper update counter
+function updateCounter(type, value) {
+  document.getElementById(`current${type}`).innerText = String(value).padStart(2, '0');
+}
 
 // Toggle MSN
 document.getElementById('toggleMsn').onclick = function() {
-  msnActive =!msnActive;
+  msnActive = !msnActive; // FIX: pake spasi
   this.classList.toggle('active', msnActive);
-  document.getElementById('statusMsn').innerText = msnActive? 'RUNNING' : 'READY';
+  const status = document.getElementById('statusMsn');
+  status.innerText = msnActive ? 'RUNNING' : 'READY';
+  status.classList.toggle('ready', !msnActive);
+  
+  if (!msnActive) {
+    clearTimeout(msnTimeout); // FIX: clearTimeout bukan clearInterval
+    msnCounter = 0;
+    updateCounter('Msn', 0);
+  }
 }
 
 // Toggle Bing
 document.getElementById('toggleBing').onclick = function() {
-  bingActive =!bingActive;
+  bingActive = !bingActive; // FIX: pake spasi
   this.classList.toggle('active', bingActive);
-  document.getElementById('statusBing').innerText = bingActive? 'RUNNING' : 'STANDBY';
+  const status = document.getElementById('statusBing');
+  status.innerText = bingActive ? 'RUNNING' : 'STANDBY';
+  
+  if (!bingActive) {
+    clearTimeout(bingTimeout); // FIX: clearTimeout
+    bingCounter = 0;
+    updateCounter('Bing', 0);
+  }
 }
 
 // Update angka total saat input berubah
 document.getElementById('targetMsn').oninput = (e) => {
   document.getElementById('totalMsn').innerText = e.target.value.padStart(2, '0');
 }
+document.getElementById('targetBing').oninput = e => {
+  document.getElementById('totalBing').innerText = e.target.value.padStart(2, '0');
+}
 
-// Tombol Eksekusi
+// Fungsi runMsn
+function runMsn() {
+  const targetMsn = parseInt(document.getElementById('targetMsn').value);
+  const minDelayMsn = parseInt(document.getElementById('minDelayMsn').value) * 1000;
+  const maxDelayMsn = parseInt(document.getElementById('maxDelayMsn').value) * 1000;
+
+  if (msnCounter >= targetMsn || !msnActive) {
+    clearTimeout(msnTimeout);
+    document.getElementById('statusMsn').innerText = 'COMPLETE';
+    checkAllComplete();
+    return;
+  }
+  
+  const urlMsn = linkMsnKamu[msnCounter % linkMsnKamu.length];
+  window.open(urlMsn, '_blank');
+  
+  msnCounter++;
+  updateCounter('Msn', msnCounter);
+  
+  const delay = Math.random() * (maxDelayMsn - minDelayMsn) + minDelayMsn;
+  msnTimeout = setTimeout(runMsn, delay);
+}
+
+// Fungsi runBing
+function runBing() {
+  const targetBing = parseInt(document.getElementById('targetBing').value);
+  const minDelayBing = parseInt(document.getElementById('minDelayBing').value) * 1000;
+  const maxDelayBing = parseInt(document.getElementById('maxDelayBing').value) * 1000;
+
+  if (bingCounter >= targetBing || !bingActive) {
+    clearTimeout(bingTimeout);
+    document.getElementById('statusBing').innerText = 'COMPLETE';
+    checkAllComplete();
+    return;
+  }
+  
+  const keyword = keywordBingKamu[bingCounter % keywordBingKamu.length];
+  const urlBing = `https://www.bing.com/search?q=${encodeURIComponent(keyword)}`;
+  window.open(urlBing, '_blank');
+  
+  bingCounter++;
+  updateCounter('Bing', bingCounter);
+  
+  const delay = Math.random() * (maxDelayBing - minDelayBing) + minDelayBing;
+  bingTimeout = setTimeout(runBing, delay);
+}
+
+// Cek apakah semua udah selesai
+function checkAllComplete() {
+  const msnDone = !msnActive || msnCounter >= parseInt(document.getElementById('targetMsn').value);
+  const bingDone = !bingActive || bingCounter >= parseInt(document.getElementById('targetBing').value);
+  if (msnDone && bingDone) {
+    document.getElementById('executeBtn').disabled = false;
+  }
+}
+
+// Tombol Eksekusi - HANYA 1 KALI INI AJA
 document.getElementById('executeBtn').onclick = () => {
-  if (!msnActive &&!bingActive) {
+  if (!msnActive && !bingActive) {
     alert('Aktifkan minimal 1 engine dulu!');
     return;
   }
-  // Di sini kamu isi logika bot kamu sendiri
-  console.log('Mulai eksekusi...');
+  
+  // Reset counter
+  msnCounter = 0;
+  bingCounter = 0;
+  updateCounter('Msn', 0);
+  updateCounter('Bing', 0);
+  
+  // Disable tombol
+  document.getElementById('executeBtn').disabled = true;
+  
+  // Mulai jalan
+  if (msnActive) runMsn();
+  if (bingActive) runBing();
 }
