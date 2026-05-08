@@ -1,172 +1,65 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Search & MSN Viewer</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Search Dashboard</title>
 
-  <style>
+<style>
 
-    body {
-      background: #0f172a;
-      color: white;
-      font-family: Arial;
-      padding: 20px;
-    }
+body {
+  margin: 0;
+  padding: 20px;
+  background: #d9e8f2;
+  font-family: Arial, sans-serif;
+}
 
-    button {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 10px;
-    }
+.card {
+  background: #10f0a0;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
 
-    #startBtn {
-      background: #22c55e;
-      color: white;
-    }
+.title {
+  font-style: italic;
+  letter-spacing: 4px;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
 
-    #log {
-      margin-top: 20px;
-      background: #111827;
-      padding: 15px;
-      border-radius: 10px;
-      height: 300px;
-      overflow: auto;
-      font-size: 14px;
-    }
+.input {
+  width: 100%;
+  height: 55px;
+  border: none;
+  border-radius: 8px;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 10px;
+}
 
-  </style>
-</head>
-<body>
+.row {
+  display: flex;
+  gap: 15px;
+}
 
-  <h1>SEARCH & MSN VIEWER</h1>
+.col {
+  flex: 1;
+}
 
-  <button id="startBtn">
-    START
-  </button>
+.counter {
+  text-align: center;
+  font-size: 50px;
+  font-style: italic;
+  margin-top: 20px;
+}
 
-  <div id="log"></div>
-
-  <script>
-
-    // ======================
-    // DATA
-    // ======================
-
-    const customQueries = [
-      "berita teknologi",
-      "cuaca indonesia",
-      "resep makanan",
-      "wisata bali"
-    ];
-
-    const newsLinks = [
-      "https://www.msn.com/en-gb/news",
-      "https://www.msn.com/en-gb/travel",
-      "https://www.msn.com/en-gb/money"
-    ];
-
-    // ======================
-    // LOG
-    // ======================
-
-    function writeLog(msg) {
-
-      const log =
-        document.getElementById("log");
-
-      const time =
-        new Date().toLocaleTimeString();
-
-      log.innerHTML += `
-        <div>
-          [${time}] ${msg}
-        </div>
-      `;
-
-      log.scrollTop =
-        log.scrollHeight;
-
-    }
-
-    // ======================
-    // DELAY
-    // ======================
-
-    function sleep(ms) {
-
-      return new Promise(
-        r => setTimeout(r, ms)
-      );
-
-    }
-
-    // ======================
-    // MAIN
-    // ======================
-
-    async function startAutomation() {
-
-      writeLog("MEMULAI...");
-
-      // ======================
-      // SEARCH
-      // ======================
-
-      for (const q of customQueries) {
-
-        writeLog(
-          `SEARCH: ${q}`
-        );
-
-        window.open(
-          "https://www.bing.com/search?q=" +
-          encodeURIComponent(q),
-          "_blank"
-        );
-
-        await sleep(4000);
-
-      }
-
-      // ======================
-      // MSN
-      // ======================
-
-      for (const link of newsLinks) {
-
-        writeLog(
-          `MEMBUKA MSN: ${link}`
-        );
-
-        window.open(
-          link,
-          "_blank"
-        );
-
-        await sleep(5000);
-
-      }
-
-      writeLog("SELESAI.");
-
-    }
-
-    // ======================
-    // BUTTON
-    // ======================
-
-    document
-      .getElementById("startBtn")
-      .addEventListener(
-        "click",
-        startAutomation
-      );
-
-  </script>
-
-</body>
+.btn {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: #1696e8;
+  color: white;
+  padding: 16px;
 </html>
