@@ -1,4 +1,4 @@
-# Modern Search + MSN Dashboard
+BUSHET EKONOMI
 
 Buat file `index.html` lalu paste semua code ini.
 
@@ -6,42 +6,55 @@ Buat file `index.html` lalu paste semua code ini.
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Search Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Flow Bot</title>
 
 <style>
 
 body {
   margin: 0;
   padding: 20px;
-  background: linear-gradient(180deg, #ffd6e7, #ffffff, #0f3d91);
   font-family: Arial, sans-serif;
+  background: linear-gradient(
+    180deg,
+    #ffd6e7,
+    #ffffff,
+    #0f3d91
+  );
+  min-height: 100vh;
 }
 
 .card {
-  background: linear-gradient(135deg, #ff8fc7, #ffffff, #3b82f6);
-  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    #ff8fc7,
+    #ffffff,
+    #60a5fa
+  );
   padding: 20px;
+  border-radius: 16px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .title {
-  font-style: italic;
-  letter-spacing: 4px;
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
 }
 
-.input {
+.input,
+textarea,
+select {
   width: 100%;
-  height: 55px;
+  padding: 12px;
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
-  font-size: 24px;
-  text-align: center;
-  margin-top: 10px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
 }
 
 .row {
@@ -53,185 +66,123 @@ body {
   flex: 1;
 }
 
-.counter {
-  text-align: center;
-  font-size: 50px;
-  font-style: italic;
-  margin-top: 20px;
-}
-
 .btn {
   width: 100%;
-  border: none;
-  border-radius: 10px;
-  background: #1696e8;
-  color: white;
   padding: 16px;
-  font-size: 22px;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
-  letter-spacing: 3px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.start-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.stop-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.counter {
+  font-size: 40px;
+  text-align: center;
+  margin-top: 15px;
 }
 
 .log {
-  background: #f2f2f2;
+  background: rgba(255,255,255,0.8);
   border-radius: 10px;
   padding: 15px;
-  height: 220px;
+  height: 250px;
   overflow-y: auto;
   font-size: 14px;
 }
 
 .progress {
   width: 100%;
-  height: 8px;
-  background: rgba(255,255,255,0.4);
+  height: 10px;
+  background: rgba(255,255,255,0.5);
   border-radius: 10px;
-  margin-top: 20px;
   overflow: hidden;
+  margin-top: 15px;
 }
 
 .progress-bar {
   width: 0%;
   height: 100%;
   background: white;
-  transition: 0.2s;
-}
-
-.query-box {
-  width: 100%;
-  min-height: 100px;
-  border: none;
-  border-radius: 10px;
-  padding: 10px;
-  margin-top: 10px;
-  font-size: 15px;
-}
-
-select {
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
+  transition: 0.1s;
 }
 
 </style>
 </head>
 <body>
 
-<!-- MSN -->
 <div class="card">
 
   <div class="title">
-    ENGINE MSN NEWS
-
-    <select id="msn-status">
-      <option>ON</option>
-      <option>OFF</option>
-    </select>
+    BOT CONTROL PANEL
   </div>
 
-  <label>TARGET KLIK</label>
+  <label>STATUS SEARCH</label>
+  <select id="searchStatus">
+    <option>ON</option>
+    <option>OFF</option>
+  </select>
 
-  <div class="row" style="margin-top:15px;">
+  <label>STATUS MSN</label>
+  <select id="msnStatus">
+    <option>ON</option>
+    <option>OFF</option>
+  </select>
 
-    <div class="col">
-      <label>DURASI MSN MIN</label>
-
-      <input
-        id="msnMinD"
-        class="input"
-        type="number"
-        value="3"
-      />
-    </div>
-
-    <div class="col">
-      <label>DURASI MSN MAX</label>
-
-      <input
-        id="msnMaxD"
-        class="input"
-        type="number"
-        value="6"
-      />
-    </div>
-
-  </div>
-
+  <label>TARGET SEARCH</label>
   <input
-    id="msn-target"
     class="input"
+    id="searchTarget"
     type="number"
-    value="5"
-  />
+    value="20"
+  >
 
-  <div class="counter">
-    <span id="msn-done">00</span>/<span id="msn-total">00</span>
-  </div>
-
-</div>
-
-<button class="btn" id="startBtn">
-  START PENCARIAN
-</button>
-
-<button class="btn" id="stopBtn" style="background:#ef4444;">
-  STOP
-</button>
-
-<!-- SEARCH -->
-<div class="card">
-
-  <div class="title">
-    ENGINE BING SEARCH
-
-    <select id="bing-status">
-      <option>ON</option>
-      <option>OFF</option>
-    </select>
-  </div>
-
-  <label>TARGET PENCARIAN</label>
-
+  <label>TARGET MSN</label>
   <input
-    id="bing-target"
     class="input"
+    id="msnTarget"
     type="number"
     value="10"
-  />
+  >
 
   <div class="row">
 
     <div class="col">
       <label>DURASI MIN</label>
-
       <input
-        id="minD"
         class="input"
+        id="minDelay"
         type="number"
-        value="3"
-      />
+        value="8"
+      >
     </div>
 
     <div class="col">
       <label>DURASI MAX</label>
-
       <input
-        id="maxD"
         class="input"
+        id="maxDelay"
         type="number"
-        value="6"
-      />
+        value="10"
+      >
     </div>
 
   </div>
 
   <label>DAFTAR QUERY</label>
 
-  <textarea
-    id="queryBox"
-    class="query-box"
-  >
+  <textarea id="queryBox" rows="6">
 resep sate
 abdullah
 akhmad sodik
@@ -246,40 +197,64 @@ harga pajero
 iphone 18
 resep soto solo
 tembok ratapan solo
-prabowo subianto
+prabowo
 penyanyi terkenal jawa tengah
 lawang sewu
 wayang golek
 oppo flip
-ramayana bali
+ramayana
   </textarea>
 
+  <button
+    class="btn start-btn"
+    id="startBtn"
+  >
+    START BOT
+  </button>
+
+  <button
+    class="btn stop-btn"
+    id="stopBtn"
+  >
+    STOP BOT
+  </button>
+
+</div>
+
+<div class="card">
+
+  <div class="title">
+    BOT STATUS
+  </div>
+
   <div class="counter">
-    <span id="bing-done">00</span>/<span id="bing-total">00</span>
+    <span id="doneCount">00</span>
   </div>
 
   <div class="progress">
-    <div class="progress-bar" id="progress-bar"></div>
+    <div
+      class="progress-bar"
+      id="progressBar"
+    ></div>
   </div>
 
 </div>
 
-<!-- LOG -->
 <div class="card">
 
   <div class="title">
-    SYSTEM ACTIVITY LOG
+    ACTIVITY LOG
   </div>
 
-  <div class="log" id="log-box"></div>
+  <div class="log" id="logBox"></div>
 
 </div>
 
 <script>
 
-// ======================
-// MSN LINKS
-// ======================
+// =========================
+// DATA
+// =========================
 
 const msnLinks = [
   "https://www.msn.com/en-gb/travel/news/holidaymakers-told-to-arrive-four-hours-early-or-miss-flights-in-ees-chaos/ss-AA22lkS6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
@@ -298,14 +273,16 @@ const msnLinks = [
   "https://www.msn.com/en-gb/news/world/sky-news-halted-for-ultimate-humiliation-breaking-news-alert-for-donald-trump/ar-AA22vBj6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
 ];
 
-// ======================
-// LOG
-// ======================
+let stopProcess = false;
 
-function writeLog(msg, color = "#333") {
+// =========================
+// LOG
+// =========================
+
+function writeLog(msg, color = "#111") {
 
   const log =
-    document.getElementById("log-box");
+    document.getElementById("logBox");
 
   const time =
     new Date().toLocaleTimeString();
@@ -320,47 +297,72 @@ function writeLog(msg, color = "#333") {
 
 }
 
-// ======================
+// =========================
 // SLEEP
-// ======================
+// =========================
 
 function sleep(ms) {
   return new Promise(r => setTimeout(r, ms));
 }
 
-// ======================
-// START
-// ======================
+// =========================
+// PROGRESS
+// =========================
 
-let stopProcess = false;
+async function runProgress(seconds) {
 
-async function startEngine() {
+  const bar =
+    document.getElementById("progressBar");
+
+  let progress = 0;
+
+  const total = seconds * 10;
+
+  const step = 100 / total;
+
+  for (let i = 0; i < total; i++) {
+
+    if (stopProcess) return;
+
+    progress += step;
+
+    bar.style.width = progress + "%";
+
+    await sleep(100);
+
+  }
+
+  bar.style.width = "0%";
+
+}
+
+// =========================
+// MAIN BOT
+// =========================
+
+async function startBot() {
 
   stopProcess = false;
 
-  const msnTarget =
-    parseInt(document.getElementById("msn-target").value);
+  writeLog("BOT DIMULAI", "green");
 
-  const bingTarget =
-    parseInt(document.getElementById("bing-target").value);
-
-  const minD =
-    parseInt(document.getElementById("minD").value);
-
-  const msnMinD =
-    parseInt(document.getElementById("msnMinD").value);
-
-  const msnMaxD =
-    parseInt(document.getElementById("msnMaxD").value);
-
-  const maxD =
-    parseInt(document.getElementById("maxD").value);
+  const searchStatus =
+    document.getElementById("searchStatus").value;
 
   const msnStatus =
-    document.getElementById("msn-status").value;
+    document.getElementById("msnStatus").value;
 
-  const bingStatus =
-    document.getElementById("bing-status").value;
+  const searchTarget =
+    parseInt(document.getElementById("searchTarget").value);
+
+  const msnTarget =
+    parseInt(document.getElementById("msnTarget").value);
+
+  const minDelay =
+    parseInt(document.getElementById("minDelay").value);
+
+  const maxDelay =
+    parseInt(document.getElementById("maxDelay").value);
 
   const queries =
     document
@@ -370,136 +372,184 @@ async function startEngine() {
       .map(v => v.trim())
       .filter(v => v);
 
-  document.getElementById("msn-total").innerText = msnTarget;
-  document.getElementById("bing-total").innerText = bingTarget;
+  let totalDone = 0;
 
-  writeLog("SYSTEM INITIALIZED...", "#111");
+  // =========================
+  // SEARCH FLOW
+  // =========================
 
-  // ======================
-  // MSN
-  // ======================
+  if (searchStatus === "ON") {
+
+    for (let i = 1; i <= searchTarget; i++) {
+
+      if (stopProcess) {
+
+        writeLog(
+          "BOT DIHENTIKAN",
+          "red"
+        );
+
+        return;
+
+      }
+
+      const q =
+        queries[
+          Math.floor(
+            Math.random() * queries.length
+          )
+        ];
+
+      const delay =
+        Math.floor(
+          Math.random() * (maxDelay - minDelay + 1)
+        ) + minDelay;
+
+      writeLog(
+        `MEMBUKA SEARCH: ${q}`,
+        "#111"
+      );
+
+      // buka pencarian
+      const searchTab = window.open(
+        "https://www.bing.com/search?q=" +
+        encodeURIComponent(q),
+        "_blank"
+      );
+
+      // tunggu beberapa detik
+      await runProgress(delay);
+
+      // kembali ke menu bot
+      try {
+        window.focus();
+      } catch (e) {}
+
+      // tutup tab search
+      try {
+        if (searchTab) {
+          searchTab.close();
+        }
+      } catch (e) {}
+
+      writeLog(
+        "KEMBALI KE MENU BOT",
+        "blue"
+      );
+
+      totalDone++;
+
+      document.getElementById(
+        "doneCount"
+      ).innerText =
+        totalDone.toString().padStart(2, "0");
+
+      await sleep(1000);
+
+    }
+
+  }
+
+  // =========================
+  // MSN FLOW
+  // =========================
 
   if (msnStatus === "ON") {
 
     for (let i = 1; i <= msnTarget; i++) {
 
       if (stopProcess) {
-        writeLog("PROCESS DIHENTIKAN", "red");
+
+        writeLog(
+          "BOT DIHENTIKAN",
+          "red"
+        );
+
         return;
+
       }
 
       const link =
         msnLinks[
-          Math.floor(Math.random() * msnLinks.length)
+          Math.floor(
+            Math.random() * msnLinks.length
+          )
         ];
-
-      writeLog(`MEMBUKA MSN ${i}/${msnTarget}`);
-
-      window.open(link, "_blank");
-
-      document.getElementById("msn-done").innerText =
-        i.toString().padStart(2, "0");
-
-      const msnDelay =
-        Math.floor(
-          Math.random() * (msnMaxD - msnMinD + 1)
-        ) + msnMinD;
-
-      writeLog(`DURASI MSN ${msnDelay} DETIK`);
-
-      await sleep(msnDelay * 1000);
-
-    }
-
-  }
-
-  // ======================
-  // SEARCH
-  // ======================
-
-  if (bingStatus === "ON") {
-
-    for (let i = 1; i <= bingTarget; i++) {
-
-      if (stopProcess) {
-        writeLog("PROCESS DIHENTIKAN", "red");
-        return;
-      }
-
-      const q =
-        queries[
-          Math.floor(Math.random() * queries.length)
-        ];
-
-      writeLog(`SEARCH: ${q}`, "#000");
-
-      const searchWindow = window.open(
-  "https://www.bing.com/search?q=" +
-  encodeURIComponent(q),
-  "_blank"
-);
-
-await sleep(delay * 1000);
-
-try {
-
-  window.focus();
-
-} catch (e) {}
-
-try {
-
-  searchWindow.close();
-
-} catch (e) {}
-
-      document.getElementById("bing-done").innerText =
-        i.toString().padStart(2, "0");
 
       const delay =
         Math.floor(
-          Math.random() * (maxD - minD + 1)
-        ) + minD;
+          Math.random() * (maxDelay - minDelay + 1)
+        ) + minDelay;
 
-      const bar =
-        document.getElementById("progress-bar");
+      writeLog(
+        `MEMBUKA MSN ${i}/${msnTarget}`,
+        "#111"
+      );
 
-      let progress = 0;
+      // buka berita
+      const msnTab = window.open(
+        link,
+        "_blank"
+      );
 
-      const step = 100 / (delay * 10);
+      // tunggu beberapa detik
+      await runProgress(delay);
 
-      for (let x = 0; x < delay * 10; x++) {
+      // kembali ke menu bot
+      try {
+        window.focus();
+      } catch (e) {}
 
-        progress += step;
+      // tutup tab
+      try {
+        if (msnTab) {
+          msnTab.close();
+        }
+      } catch (e) {}
 
-        bar.style.width = progress + "%";
+      writeLog(
+        "KEMBALI KE MENU BOT",
+        "blue"
+      );
 
-        await sleep(100);
+      totalDone++;
 
-      }
+      document.getElementById(
+        "doneCount"
+      ).innerText =
+        totalDone.toString().padStart(2, "0");
 
-      bar.style.width = "0%";
+      await sleep(1000);
 
     }
 
   }
 
-  writeLog("SEMUA TUGAS SELESAI", "green");
+  // =========================
+  // DONE
+  // =========================
+
+  writeLog(
+    "BOT TELAH SELESAI DIGUNAKAN",
+    "green"
+  );
+
+  alert(
+    "BOT TELAH SELESAI DIGUNAKAN"
+  );
 
 }
 
-// ======================
-// BUTTON
-// ======================
+// =========================
+// BUTTONS
+// =========================
 
 document
   .getElementById("startBtn")
   .addEventListener(
     "click",
-    startEngine
+    startBot
   );
-
-// STOP BUTTON
 
 document
   .getElementById("stopBtn")
@@ -523,21 +573,4 @@ document
 </html>
 ```
 
-## Cara Pakai
-
-1. Buat file `index.html`
-2. Paste semua code
-3. Buka file di browser
-4. Klik `START PENCARIAN`
-5. Isi query bebas di textarea
-
-## Fitur
-
-* UI mirip screenshot
-* Engine MSN
-* Engine Search
-* Query custom
-* Progress bar
-* Activity log
-* Delay random
-* Counter otomatis
+PUNYA BASHIT DAN MUEL
