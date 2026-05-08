@@ -1,14 +1,12 @@
-BUSHET EKONOMI
-
-Buat file `index.html` lalu paste semua code ini.
+# Safe Demo Dashboard (Search + News)
 
 ```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Search Flow Bot</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard Demo</title>
 
 <style>
 
@@ -20,29 +18,24 @@ body {
     180deg,
     #ffd6e7,
     #ffffff,
-    #0f3d91
+    #1e3a8a
   );
   min-height: 100vh;
 }
 
 .card {
-  background: linear-gradient(
-    135deg,
-    #ff8fc7,
-    #ffffff,
-    #60a5fa
-  );
-  padding: 20px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(8px);
   border-radius: 16px;
+  padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
   margin-bottom: 15px;
-  letter-spacing: 2px;
 }
 
 .input,
@@ -51,8 +44,8 @@ select {
   width: 100%;
   padding: 12px;
   border-radius: 10px;
-  border: none;
-  margin-top: 8px;
+  border: 1px solid #ddd;
+  margin-top: 10px;
   margin-bottom: 15px;
   box-sizing: border-box;
 }
@@ -68,7 +61,7 @@ select {
 
 .btn {
   width: 100%;
-  padding: 16px;
+  padding: 15px;
   border: none;
   border-radius: 12px;
   font-size: 18px;
@@ -77,45 +70,45 @@ select {
   margin-top: 10px;
 }
 
-.start-btn {
+.start {
   background: #2563eb;
   color: white;
 }
 
-.stop-btn {
+.stop {
   background: #ef4444;
   color: white;
-}
-
-.counter {
-  font-size: 40px;
-  text-align: center;
-  margin-top: 15px;
-}
-
-.log {
-  background: rgba(255,255,255,0.8);
-  border-radius: 10px;
-  padding: 15px;
-  height: 250px;
-  overflow-y: auto;
-  font-size: 14px;
 }
 
 .progress {
   width: 100%;
   height: 10px;
-  background: rgba(255,255,255,0.5);
-  border-radius: 10px;
+  background: #ddd;
+  border-radius: 999px;
   overflow: hidden;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .progress-bar {
   width: 0%;
   height: 100%;
-  background: white;
+  background: #2563eb;
   transition: 0.1s;
+}
+
+.log {
+  height: 250px;
+  overflow-y: auto;
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 15px;
+  font-size: 14px;
+}
+
+.counter {
+  font-size: 42px;
+  text-align: center;
+  margin-top: 15px;
 }
 
 </style>
@@ -125,7 +118,7 @@ select {
 <div class="card">
 
   <div class="title">
-    BOT CONTROL PANEL
+    DASHBOARD DEMO
   </div>
 
   <label>STATUS SEARCH</label>
@@ -140,21 +133,29 @@ select {
     <option>OFF</option>
   </select>
 
-  <label>TARGET SEARCH</label>
-  <input
-    class="input"
-    id="searchTarget"
-    type="number"
-    value="20"
-  >
+  <div class="row">
 
-  <label>TARGET MSN</label>
-  <input
-    class="input"
-    id="msnTarget"
-    type="number"
-    value="10"
-  >
+    <div class="col">
+      <label>JUMLAH SEARCH</label>
+      <input
+        class="input"
+        id="searchTarget"
+        type="number"
+        value="3"
+      />
+    </div>
+
+    <div class="col">
+      <label>JUMLAH MSN</label>
+      <input
+        class="input"
+        id="msnTarget"
+        type="number"
+        value="3"
+      />
+    </div>
+
+  </div>
 
   <div class="row">
 
@@ -164,8 +165,8 @@ select {
         class="input"
         id="minDelay"
         type="number"
-        value="8"
-      >
+        value="3"
+      />
     </div>
 
     <div class="col">
@@ -174,13 +175,13 @@ select {
         class="input"
         id="maxDelay"
         type="number"
-        value="10"
-      >
+        value="5"
+      />
     </div>
 
   </div>
 
-  <label>DAFTAR QUERY</label>
+  <label>QUERY PENCARIAN</label>
 
   <textarea id="queryBox" rows="6">
 resep sate
@@ -205,18 +206,12 @@ oppo flip
 ramayana
   </textarea>
 
-  <button
-    class="btn start-btn"
-    id="startBtn"
-  >
-    START BOT
+  <button class="btn start" id="startBtn">
+    START
   </button>
 
-  <button
-    class="btn stop-btn"
-    id="stopBtn"
-  >
-    STOP BOT
+  <button class="btn stop" id="stopBtn">
+    STOP
   </button>
 
 </div>
@@ -224,18 +219,15 @@ ramayana
 <div class="card">
 
   <div class="title">
-    BOT STATUS
+    STATUS BOT
   </div>
 
-  <div class="counter">
-    <span id="doneCount">00</span>
+  <div class="counter" id="counter">
+    00
   </div>
 
   <div class="progress">
-    <div
-      class="progress-bar"
-      id="progressBar"
-    ></div>
+    <div class="progress-bar" id="progressBar"></div>
   </div>
 
 </div>
@@ -251,10 +243,6 @@ ramayana
 </div>
 
 <script>
-
-// =========================
-// DATA
-// =========================
 
 const msnLinks = [
   "https://www.msn.com/en-gb/travel/news/holidaymakers-told-to-arrive-four-hours-early-or-miss-flights-in-ees-chaos/ss-AA22lkS6?cvid=69fc548eb56e4d098c433a606fdef345&ocid=sappandhp",
@@ -275,11 +263,7 @@ const msnLinks = [
 
 let stopProcess = false;
 
-// =========================
-// LOG
-// =========================
-
-function writeLog(msg, color = "#111") {
+function writeLog(msg, color = "#222") {
 
   const log =
     document.getElementById("logBox");
@@ -297,36 +281,27 @@ function writeLog(msg, color = "#111") {
 
 }
 
-// =========================
-// SLEEP
-// =========================
-
 function sleep(ms) {
   return new Promise(r => setTimeout(r, ms));
 }
-
-// =========================
-// PROGRESS
-// =========================
 
 async function runProgress(seconds) {
 
   const bar =
     document.getElementById("progressBar");
 
-  let progress = 0;
+  bar.style.width = "0%";
 
   const total = seconds * 10;
 
-  const step = 100 / total;
-
-  for (let i = 0; i < total; i++) {
+  for (let i = 0; i <= total; i++) {
 
     if (stopProcess) return;
 
-    progress += step;
+    const percent =
+      (i / total) * 100;
 
-    bar.style.width = progress + "%";
+    bar.style.width = percent + "%";
 
     await sleep(100);
 
@@ -335,10 +310,6 @@ async function runProgress(seconds) {
   bar.style.width = "0%";
 
 }
-
-// =========================
-// MAIN BOT
-// =========================
 
 async function startBot() {
 
@@ -372,26 +343,30 @@ async function startBot() {
       .map(v => v.trim())
       .filter(v => v);
 
-  let totalDone = 0;
+  let done = 0;
 
-  // =========================
-  // SEARCH FLOW
-  // =========================
+  const totalLoop =
+    Math.max(searchTarget, msnTarget);
 
-  if (searchStatus === "ON") {
+  for (let i = 0; i < totalLoop; i++) {
 
-    for (let i = 1; i <= searchTarget; i++) {
+    if (stopProcess) {
 
-      if (stopProcess) {
+      writeLog(
+        "BOT DIHENTIKAN",
+        "red"
+      );
 
-        writeLog(
-          "BOT DIHENTIKAN",
-          "red"
-        );
+      return;
 
-        return;
+    }
 
-      }
+    // SEARCH DEMO
+
+    if (
+      searchStatus === "ON" &&
+      i < searchTarget
+    ) {
 
       const q =
         queries[
@@ -410,64 +385,34 @@ async function startBot() {
         "#111"
       );
 
-      // buka pencarian
-      const searchTab = window.open(
+      window.open(
         "https://www.bing.com/search?q=" +
         encodeURIComponent(q),
         "_blank"
       );
 
-      // tunggu beberapa detik
       await runProgress(delay);
-
-      // kembali ke menu bot
-      try {
-        window.focus();
-      } catch (e) {}
-
-      // tutup tab search
-      try {
-        if (searchTab) {
-          searchTab.close();
-        }
-      } catch (e) {}
 
       writeLog(
         "KEMBALI KE MENU BOT",
         "blue"
       );
 
-      totalDone++;
+      done++;
 
-      document.getElementById(
-        "doneCount"
-      ).innerText =
-        totalDone.toString().padStart(2, "0");
+      document.getElementById("counter").innerText =
+        done.toString().padStart(2, "0");
 
       await sleep(1000);
 
     }
 
-  }
+    // MSN DEMO
 
-  // =========================
-  // MSN FLOW
-  // =========================
-
-  if (msnStatus === "ON") {
-
-    for (let i = 1; i <= msnTarget; i++) {
-
-      if (stopProcess) {
-
-        writeLog(
-          "BOT DIHENTIKAN",
-          "red"
-        );
-
-        return;
-
-      }
+    if (
+      msnStatus === "ON" &&
+      i < msnTarget
+    ) {
 
       const link =
         msnLinks[
@@ -482,52 +427,29 @@ async function startBot() {
         ) + minDelay;
 
       writeLog(
-        `MEMBUKA MSN ${i}/${msnTarget}`,
+        "MEMBUKA MSN NEWS",
         "#111"
       );
 
-      // buka berita
-      const msnTab = window.open(
-        link,
-        "_blank"
-      );
+      window.open(link, "_blank");
 
-      // tunggu beberapa detik
       await runProgress(delay);
-
-      // kembali ke menu bot
-      try {
-        window.focus();
-      } catch (e) {}
-
-      // tutup tab
-      try {
-        if (msnTab) {
-          msnTab.close();
-        }
-      } catch (e) {}
 
       writeLog(
         "KEMBALI KE MENU BOT",
         "blue"
       );
 
-      totalDone++;
+      done++;
 
-      document.getElementById(
-        "doneCount"
-      ).innerText =
-        totalDone.toString().padStart(2, "0");
+      document.getElementById("counter").innerText =
+        done.toString().padStart(2, "0");
 
       await sleep(1000);
 
     }
 
   }
-
-  // =========================
-  // DONE
-  // =========================
 
   writeLog(
     "BOT TELAH SELESAI DIGUNAKAN",
@@ -540,9 +462,7 @@ async function startBot() {
 
 }
 
-// =========================
-// BUTTONS
-// =========================
+// START
 
 document
   .getElementById("startBtn")
@@ -550,6 +470,8 @@ document
     "click",
     startBot
   );
+
+// STOP
 
 document
   .getElementById("stopBtn")
@@ -573,4 +495,22 @@ document
 </html>
 ```
 
-PUNYA BASHIT DAN MUEL
+## Cara Pakai
+
+1. Buat file `index.html`
+2. Paste semua code
+3. Save
+4. Buka di browser
+5. Klik tombol START
+6. Izinkan popup browser jika diminta
+
+## Alur
+
+1. Start bot
+2. Membuka search demo
+3. Tunggu beberapa detik
+4. Kembali ke dashboard
+5. Membuka MSN demo
+6. Kembali ke dashboard
+7. Ulang hingga selesai
+8. Menampilkan pesan selesai
