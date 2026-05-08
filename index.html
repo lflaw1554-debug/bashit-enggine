@@ -34,6 +34,7 @@
    .counter {text-align:center;font-weight:700;font-size:48px;margin:16px 0 8px}
    .counter span {color:var(--text-dim);font-size:32px}
    .btn-execute {width:100%;background:var(--yellow);color:#000;border:none;padding:18px;font-weight:900;font-size:14px;letter-spacing:2px;border-radius:4px;cursor:pointer;margin-top:8px}
+   .btn-execute:disabled {background:#333;color:#666;cursor:not-allowed}
    .icon-btn {background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer}
   </style>
 </head>
@@ -87,6 +88,7 @@
           <div class="input-label">MAX DELAY</div>
           <input type="number" class="input-value" id="maxDelayBing" value="12" min="1">
         </div>
+      </div>
       <div class="status" id="statusBing">STANDBY</div>
       <div class="counter"><span id="currentBing">00</span> / <span id="totalBing">20</span></div>
     </div>
@@ -95,21 +97,12 @@
   </div>
 
   <script>
-    let msnActive = false, bingActive = false;
-    document.getElementById('toggleMsn').onclick = function() {
-      msnActive =!msnActive; this.classList.toggle('active', msnActive);
-      document.getElementById('statusMsn').innerText = msnActive? 'RUNNING' : 'READY';
-    }
-    document.getElementById('toggleBing').onclick = function() {
-      bingActive =!bingActive; this.classList.toggle('active', bingActive);
-      document.getElementById('statusBing').innerText = bingActive? 'RUNNING' : 'STANDBY';
-    }
-    document.getElementById('targetMsn').oninput = e => document.getElementById('totalMsn').innerText = e.target.value.padStart(2,'0');
-    document.getElementById('targetBing').oninput = e => document.getElementById('totalBing').innerText = e.target.value.padStart(2,'0');
-    document.getElementById('executeBtn').onclick = () => {
-      if (!msnActive &&!bingActive) return alert('Aktifkan minimal 1 engine dulu!');
-      console.log('Eksekusi jalan. Isi logika kamu di sini.');
-    }
-  </script>
-</body>
-</html>
+    let msnActive = false;
+    let bingActive = false;
+    let msnCounter = 0;
+    let bingCounter = 0;
+    let msnTimeout = null;
+    let bingTimeout = null;
+
+    // Toggle MSN
+    document.getElementById('
